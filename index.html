@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FPFK Bethania Academy | Determination is Nobility</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <header>
+        <div class="nav-container">
+            <div class="logo-area">
+                <img src="logo.jpeg" alt="FPFK Bethania Logo" class="school-logo">
+                <div class="school-name-text">
+                    <h1>FPFK BETHANIA</h1>
+                    <span>ACADEMY - LIKONI</span>
+                </div>
+            </div>
+            
+            <button class="menu-btn" onclick="toggleMenu()">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <nav id="nav-menu">
+                <ul>
+                    <li><a href="#home" onclick="toggleMenu()">Home</a></li>
+                    <li><a href="#about" onclick="toggleMenu()">About Us</a></li>
+                    <li><a href="#values" onclick="toggleMenu()">Core Values</a></li>
+                    <li><a href="#contact" onclick="toggleMenu()">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="slider-section" id="home">
+        <div class="slider">
+            <div class="slide"><img src="main.jpg" alt="Main Campus"><div class="caption">Welcome to Bethania Academy</div></div>
+            <div class="slide"><img src="gate.jpg" alt="School Gate"><div class="caption">Secure Environment for Learning</div></div>
+            <div class="slide"><img src="staff.jpg" alt="School Staff"><div class="caption">Dedicated Teaching Professionals</div></div>
+            <div class="slide"><img src="scouts.jpg" alt="School Scouts"><div class="caption">Building Character & Leadership</div></div>
+            <div class="slide"><img src="classes.jpg" alt="Classrooms"><div class="caption">Quality Academic Facilities</div></div>
+            <div class="slide"><img src="field.jpg" alt="Playing Field"><div class="caption">Talent and Sports Development</div></div>
+            <div class="slide"><img src="buses.jpg" alt="School Buses"><div class="caption">Reliable Transport Services</div></div>
+        </div>
+        <div class="hero-overlay">
+            <h2>Determination is Nobility</h2>
+            <p>Providing holistic Christian-based education since 1992.</p>
+        </div>
+    </section>
+
+    <section id="about" class="container">
+        <h2>About Our School</h2>
+        <p>FPFK Bethania Academy was established in 1992 under the FPFK Likoni Church. We have grown from a small group of nine learners to a leading institution in Mombasa, offering quality education and strong spiritual foundations for Nursery, Primary, and Junior Secondary levels.</p>
+    </section>
+
+    <section id="values" class="bg-light">
+        <div class="container">
+            <h2>Our Core Values</h2>
+            <div class="values-grid">
+                <div class="value-item"><strong>God Fearing</strong></div>
+                <div class="value-item"><strong>Excellence</strong></div>
+                <div class="value-item"><strong>Discipline</strong></div>
+                <div class="value-item"><strong>Integrity</strong></div>
+                <div class="value-item"><strong>Accountability</strong></div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="container">
+            <h3>Contact Information</h3>
+            <p><i class="fas fa-map-marker-alt"></i> Along Likoni Ukunda Road, Mombasa</p>
+            <p><i class="fas fa-phone"></i> +254 711 638 425 / +254 728 870 061</p>
+            <p><i class="fas fa-envelope"></i> fpfkbethacademy@gmail.com</p>
+            <hr>
+            <p>&copy; 2026 FPFK Bethania Academy. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/254702242291?text=Hello,%20I%20am%20inquiring%20about%20admissions%20at%20FPFK%20Bethania%20Academy." class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+        <span>Chat with Us</span>
+    </a>
+
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById('nav-menu');
+            menu.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>
