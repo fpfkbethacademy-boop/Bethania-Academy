@@ -9,14 +9,14 @@
 </head>
 <body>
 
+    <div class="top-header">
+        <h1>F.P.F.K BETHANIA ACADEMY</h1>
+    </div>
+
     <header>
         <div class="nav-container">
-            <div class="logo-area">
-                <img src="logo.jpeg" alt="FPFK Bethania Logo" class="school-logo">
-                <div class="school-name-text">
-                    <h1>FPFK BETHANIA</h1>
-                    <span>ACADEMY - LIKONI</span>
-                </div>
+            <div class="logo-box">
+                <img src="logo.jpeg" alt="School Logo" class="profile-logo">
             </div>
             
             <button class="menu-btn" onclick="toggleMenu()">
@@ -25,92 +25,54 @@
 
             <nav id="nav-menu">
                 <ul>
-                    <li><a href="#home" onclick="toggleMenu()">Home</a></li>
-                    <li><a href="#history" onclick="toggleMenu()">Our History</a></li>
-                    <li><a href="#about" onclick="toggleMenu()">About Us</a></li>
-                    <li><a href="#contact" onclick="toggleMenu()">Contact</a></li>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="academics.html">Academics</a></li>
+                    <li><a href="admissions.html">Admissions</a></li>
+                    <li><a href="activities.html">Co-Curricular</a></li>
+                    <li><a href="library.html">Library</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-    <section class="hero-section" id="home">
-        <div class="slider">
-            <div class="slide"><img src="main.jpg" alt="Main Campus"></div>
-            <div class="slide"><img src="gate.jpg" alt="School Gate"></div>
-            <div class="slide"><img src="staff.jpg" alt="School Staff"></div>
-            <div class="slide"><img src="scouts.jpg" alt="School Scouts"></div>
-            <div class="slide"><img src="classes.jpg" alt="Classrooms"></div>
-            <div class="slide"><img src="field.jpg" alt="Playing Field"></div>
-            <div class="slide"><img src="buses.jpg" alt="School Buses"></div>
-        </div>
-        
-        <div class="hero-content">
-            <div class="motto-badge">Motto: Determination is Nobility</div>
-            <h2>F.P.F.K Bethania Academy</h2>
-            <p>A Project of Free Pentecostal Fellowship Kenya Likoni Church</p>
-            <a href="#about" class="btn-primary">Explore Our Mission</a>
-        </div>
-    </section>
-
-    <section id="history" class="section history-bg">
-        <div class="container">
-            <h2 class="section-title">Our Rich History</h2>
-            <div class="history-content">
-                <p>FPFK Bethania Academy was established in 1992, originating from the vision of the Free Pentecostal Fellowship in Kenya (FPFK) Likoni Church Women’s Fellowship. Starting with an initial enrollment of just nine (9) learners and four (4) staff members, the institution was founded to meet the holistic needs of the community.</p>
-                <p>Under the leadership of Rev. Michael Onyango and with support from Swedish missionaries Mr. Stig Jakobson and Mr. & Mrs. Arne Frodin, the school grew progressively from Nursery to Primary and now Junior Secondary levels. Today, it stands as a pillar of excellence in the Likoni-Ukunda road area.</p>
+    <section class="news-slider">
+        <h2 class="section-title">Campus Highlights</h2>
+        <div class="news-grid">
+            <div class="news-item">
+                <img src="main.jpg" alt="Main Campus">
+                <div class="news-caption">Welcome to our main campus in Likoni.</div>
+            </div>
+            <div class="news-item">
+                <img src="staff.jpg" alt="Staff">
+                <div class="news-caption">Our experienced and dedicated teaching staff.</div>
+            </div>
+            <div class="news-item">
+                <img src="scouts.jpg" alt="Scouts">
+                <div class="news-caption">Active character building through Scouts.</div>
             </div>
         </div>
+        <div class="welcome-area">
+            <a href="about.html" class="welcome-btn">Welcome to Our School <i class="fas fa-arrow-right"></i></a>
+        </div>
     </section>
 
-    <section id="about" class="section bg-light-blue">
+    <section class="history-section">
         <div class="container">
-            <h2 class="section-title">About Us</h2>
-            <div class="about-grid">
-                <div class="about-card">
-                    <i class="fas fa-eye"></i>
-                    <h3>Our Vision</h3>
-                    <p>To be a strong Pentecostal church that meets the needs of the society holistically.</p>
-                </div>
-                <div class="about-card">
-                    <i class="fas fa-bullseye"></i>
-                    <h3>Our Mission</h3>
-                    <p>To preach the word of God to all nations in preparation of the second coming of the Lord Jesus Christ, by reaching out and meeting spiritual, economic, and social needs.</p>
-                </div>
-                <div class="about-card full-width">
-                    <h3>Core Values</h3>
-                    <div class="values-tags">
-                        <span>God Fearing</span>
-                        <span>Excellence for All</span>
-                        <span>Discipline</span>
-                        <span>Integrity</span>
-                        <span>Accountability</span>
-                        <span>Environmental Protection</span>
-                    </div>
-                </div>
+            <h3>Our Heritage & Excellence</h3>
+            <p>Established in 1992 by the FPFK Likoni Church Women's Fellowship, Bethania Academy has a long-standing tradition of academic excellence. From our humble beginnings with nine learners, we have consistently achieved top-tier performance in Mombasa County.</p>
+            <div class="performance-badge">
+                <i class="fas fa-chart-line"></i> Top Performing School in Likoni Sub-County
             </div>
         </div>
     </section>
 
-    <footer id="contact">
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-info">
-                    <h3>Contact Us</h3>
-                    <p><i class="fas fa-map-marker-alt"></i> Along Likoni Ukunda Road, Mombasa</p>
-                    <p><i class="fas fa-phone"></i> +254 711 638 425 / +254 728 870 061</p>
-                    <p><i class="fas fa-envelope"></i> fpfkbethacademy@gmail.com</p>
-                </div>
-            </div>
-            <div class="copyright">
-                &copy; 2026 FPFK Bethania Academy | Determination is Nobility
-            </div>
-        </div>
+    <footer>
+        <p>&copy; 2026 FPFK Bethania Academy. All Rights Reserved.</p>
+        <p>Likoni-Ukunda Road, Mombasa.</p>
     </footer>
 
-    <a href="https://wa.me/254702242291" class="whatsapp-btn" target="_blank">
-        <i class="fab fa-whatsapp"></i>
-    </a>
+    <a href="https://wa.me/254702242291" class="whatsapp-btn"><i class="fab fa-whatsapp"></i></a>
 
     <script>
         function toggleMenu() {
