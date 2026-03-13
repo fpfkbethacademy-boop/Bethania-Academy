@@ -1,49 +1,62 @@
+/* FPFK BETHANIA ACADEMY - STYLE */
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: 'Arial', sans-serif; line-height: 1.6; color: #333; text-align: center; background-color: #fff; }
+body { font-family: 'Segoe UI', Arial, sans-serif; background: #fff; line-height: 1.6; color: #333; overflow-x: hidden; text-align: center; }
 
-/* Navigation */
-header { background: white; padding: 10px 5%; box-shadow: 0 2px 10px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 1000; }
-.nav-container { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: auto; }
-.profile-logo { height: 60px; }
-nav ul { display: flex; list-style: none; gap: 20px; }
-nav ul li a { text-decoration: none; color: #2c3e50; font-weight: bold; }
+/* Header & Nav */
+.top-header { background: #fff; text-align: center; padding: 20px 0; border-bottom: 3px solid #42a5f5; }
+.top-header h1 { color: #2c3e50; font-size: 1.4rem; letter-spacing: 1px; }
+header { background: #fff; padding: 10px 5%; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+.nav-container { display: flex; justify-content: space-between; align-items: center; }
+.profile-logo { height: 75px; width: auto; }
+.menu-btn { font-size: 1.8rem; background: none; border: none; color: #42a5f5; cursor: pointer; }
+nav { position: absolute; top: 100%; right: -100%; background: #2c3e50; width: 250px; transition: 0.4s; border-radius: 0 0 0 15px; }
+nav.active { right: 0; }
+nav ul { list-style: none; text-align: left; }
+nav ul li a { display: block; padding: 15px 20px; color: #fff; text-decoration: none; border-bottom: 1px solid #34495e; font-weight: 600; }
 
-/* Header Titles */
-.top-title { padding: 20px; background: #fff; }
-.motto-text { color: #42a5f5; font-style: italic; font-weight: bold; font-size: 1.2rem; }
-
-/* SLIDER FIX: Center & Standardize Size */
-.news-slider { padding: 20px 0; background: #f4f4f4; }
-.slider-wrapper { width: 90%; max-width: 700px; margin: auto; overflow: hidden; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); position: relative; }
-.auto-slider { display: flex; width: 400%; animation: slideEffect 20s infinite; }
-.slide-card { width: 25%; position: relative; }
-.slide-card img { width: 100%; height: 400px; object-fit: cover; display: block; }
-
-/* Professional Captions */
-.photo-caption { position: absolute; bottom: 0; background: rgba(0, 0, 0, 0.7); color: #fff; width: 100%; padding: 12px; font-size: 0.95rem; }
+/* Slider */
+.news-slider { padding: 40px 0; background: #f4f4f4; }
+.slider-wrapper { width: 90%; max-width: 600px; margin: auto; overflow: hidden; border-radius: 12px; box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
+.auto-slider { display: flex; width: 500%; animation: slideEffect 25s infinite; }
+.slide-card { width: 100%; position: relative; }
+.slide-card img { width: 100%; height: 350px; object-fit: cover; display: block; }
+.photo-caption { position: absolute; bottom: 0; width: 100%; background: rgba(44, 62, 80, 0.85); color: white; padding: 10px; font-size: 0.85rem; }
 
 @keyframes slideEffect {
-    0%, 20% { transform: translateX(0); }
-    25%, 45% { transform: translateX(-25%); }
-    50%, 70% { transform: translateX(-50%); }
-    75%, 95% { transform: translateX(-75%); }
+    0%, 15% { transform: translateX(0); }
+    20%, 35% { transform: translateX(-20%); }
+    40%, 55% { transform: translateX(-40%); }
+    60%, 75% { transform: translateX(-60%); }
+    80%, 95% { transform: translateX(-80%); }
+    100% { transform: translateX(0); }
 }
 
-/* Section Styling */
-.section-padding { padding: 50px 10%; }
-.section-title { margin-bottom: 25px; color: #2c3e50; border-bottom: 2px solid #42a5f5; display: inline-block; padding-bottom: 5px; }
-.centered-p { max-width: 800px; margin: auto; font-size: 1.1rem; }
+/* Headteacher Section */
+.headteacher-section { padding: 40px 10%; background: #fff; }
+.headteacher-flex { display: flex; flex-wrap: wrap; align-items: center; gap: 30px; justify-content: center; }
+.headteacher-photo img { width: 200px; height: 200px; border-radius: 50%; border: 5px solid #e3f2fd; object-fit: cover; }
+.headteacher-speech { flex: 1; min-width: 300px; text-align: left; border-left: 4px solid #42a5f5; padding-left: 20px; }
 
-/* Headteacher Layout */
-.headteacher-container { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 30px; margin-top: 20px; }
-.headteacher-img { width: 220px; border-radius: 50%; border: 5px solid #42a5f5; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-.speech-bubble { flex: 1; min-width: 300px; background: #f9f9f9; padding: 25px; border-radius: 15px; border-left: 5px solid #42a5f5; font-style: italic; }
+/* History & Achievements */
+.history-section { padding: 40px 10%; }
+.achievement-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 30px; }
+.achieve-card { background: #e3f2fd; padding: 25px; border-radius: 12px; text-align: left; }
+.achieve-card i { font-size: 2rem; color: #1976d2; margin-bottom: 15px; }
 
-/* Board Grid */
-.board-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 30px; }
-.board-item img { width: 150px; height: 150px; object-fit: cover; border-radius: 10px; margin-bottom: 10px; }
+/* Welcome Image Centering */
+.center-img-box { padding: 40px 0; display: flex; justify-content: center; }
+.responsive-welcome { max-width: 80%; height: auto; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
 
-/* Footer & WhatsApp */
-footer { background: #2c3e50; color: #fff; padding: 30px; margin-top: 40px; }
-.footer-quote { font-style: italic; color: #42a5f5; margin-bottom: 10px; font-weight: bold; }
-.whatsapp-btn { position: fixed; bottom: 25px; right: 25px; background: #25D366; color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.3); z-index: 2000; text-decoration: none; }
+/* Footer */
+footer { background: #2c3e50; color: #fff; padding: 40px 10%; margin-top: 30px; }
+.footer-quote { font-style: italic; font-size: 1.2rem; color: #42a5f5; margin-bottom: 15px; }
+
+/* Floating WhatsApp */
+.whatsapp-btn { position: fixed; bottom: 20px; right: 20px; background: #25D366; color: #fff; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; text-decoration: none; z-index: 2000; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+
+.welcome-btn { background: #42a5f5; color: #fff; padding: 12px 25px; text-decoration: none; border-radius: 25px; display: inline-block; margin-top: 15px; font-weight: bold; }
+
+@media (max-width: 768px) {
+    .headteacher-flex { flex-direction: column; text-align: center; }
+    .headteacher-speech { border-left: none; border-top: 4px solid #42a5f5; padding: 20px 0 0 0; text-align: center; }
+}
