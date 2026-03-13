@@ -60,3 +60,51 @@ footer { background: #2c3e50; color: #fff; padding: 40px 10%; margin-top: 30px; 
     .headteacher-flex { flex-direction: column; text-align: center; }
     .headteacher-speech { border-left: none; border-top: 4px solid #42a5f5; padding: 20px 0 0 0; text-align: center; }
 }
+/* Board Member Grid Layout */
+.board-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+    justify-items: center;
+}
+
+.board-item {
+    text-align: center;
+    background: #fff;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 180px;
+}
+
+/* Fix for Board Photos - Uniform & No Distortion */
+.board-item img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover; /* This prevents distortion */
+    border-radius: 8px;
+    border: 2px solid #42a5f5;
+    margin-bottom: 8px;
+}
+
+.board-item p {
+    font-size: 0.85rem;
+    line-height: 1.2;
+}
+
+/* Ensure About Container is Centered */
+.about-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Footer Quote Style */
+.footer-quote {
+    font-style: italic;
+    font-weight: bold;
+    color: #42a5f5;
+    margin-bottom: 5px;
+}
