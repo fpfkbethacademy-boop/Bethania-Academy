@@ -9,20 +9,12 @@
 </head>
 <body>
 
-    <div class="top-header">
-        <h1>F.P.F.K BETHANIA ACADEMY</h1>
-    </div>
-
     <header>
         <div class="nav-container">
-            <div class="logo-box">
-                <img src="images/logo.jpeg" alt="School Logo" class="profile-logo">
-            </div>
-            
+            <img src="images/logo.jpeg" alt="FPFK Bethania Logo" class="profile-logo">
             <button class="menu-btn" onclick="toggleMenu()">
                 <i class="fas fa-bars"></i>
             </button>
-
             <nav id="nav-menu">
                 <ul>
                     <li><a href="index.html">Home</a></li>
@@ -30,49 +22,70 @@
                     <li><a href="academics.html">Academics</a></li>
                     <li><a href="admissions.html">Admissions</a></li>
                     <li><a href="activities.html">Co-Curricular</a></li>
-                    <li><a href="library.html">Library</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
+    <div class="top-title">
+        <h1>F.P.F.K BETHANIA ACADEMY</h1>
+        <p class="motto-text">"Determination is Nobility"</p>
+    </div>
+
     <section class="news-slider">
-        <h2 class="section-title">Campus Highlights</h2>
         <div class="slider-wrapper">
             <div class="auto-slider">
-                <div class="slide-card"><img src="images/main.jpg" alt="Campus"></div>
-                <div class="slide-card"><img src="images/staff.jpg" alt="Staff"></div>
-                <div class="slide-card"><img src="images/scouts.jpg" alt="Scouts"></div>
-                <div class="slide-card"><img src="images/gate.jpg" alt="Gate"></div>
-                <div class="slide-card"><img src="images/buses.jpg" alt="Buses"></div>
+                <div class="slide-card">
+                    <img src="images/main.jpg" alt="Main Gate">
+                    <div class="photo-caption">Main gate along Likoni-Ukunda road.</div>
+                </div>
+                <div class="slide-card">
+                    <img src="images/staff.jpg" alt="Our Staff">
+                    <div class="photo-caption">Our professional and dedicated teaching team.</div>
+                </div>
+                <div class="slide-card">
+                    <img src="images/scouts.jpg" alt="Sea Scouts">
+                    <div class="photo-caption">Character building through Sea Scouts activities.</div>
+                </div>
+                <div class="slide-card">
+                    <img src="images/buses.jpg" alt="School Buses">
+                    <div class="photo-caption">Safe and reliable transport for our learners.</div>
+                </div>
             </div>
-        </div>
-        <div class="welcome-area">
-            <a href="about.html" class="welcome-btn">Welcome to Our School <i class="fas fa-arrow-right"></i></a>
         </div>
     </section>
 
-    <section class="history-section">
-        <div class="container text-center">
-            <h3>Our Heritage & Excellence</h3>
-            <p>Founded in 1992, FPFK Bethania Academy has a rich history of providing quality, Christian-based education to students. We are proud of our excellent KCPE performance and are currently enrolling for Grade 7, 8, and 9 for the new curriculum.</p>
+    <section class="section-padding">
+        <h2 class="section-title">Message from the Headteacher</h2>
+        <div class="headteacher-container">
+            <img src="images/staff.jpg" alt="Headteacher" class="headteacher-img">
+            <div class="speech-bubble">
+                <p>"At FPFK Bethania Academy, we are committed to providing holistic, quality education based on Christian values. Our goal is to prepare every student for a successful future through discipline and academic excellence."</p>
+                <p><strong>- School Administration</strong></p>
+            </div>
         </div>
+    </section>
+
+    <section class="section-padding" style="background: #f0f7ff;">
+        <h2 class="section-title">Academic Excellence</h2>
+        <p class="centered-p">Founded in 1992, we are a leading institution in Likoni. Our students consistently perform excellently in national assessments, with a steady improvement in KCPE mean grades reaching B+ in 2024. We are currently enrolling for Junior Secondary (Grade 7, 8, and 9).</p>
+        <a href="academics.html" class="action-btn">View Performance Results</a>
     </section>
 
     <footer>
-        <p>&copy; 2026 FPFK Bethania Academy. All Rights Reserved.</p>
-        <p>Likoni-Ukunda Road, Mombasa.</p>
+        <div class="footer-content">
+            <p class="footer-quote">"Determination is Nobility"</p>
+            <p>&copy; 2026 FPFK Bethania Academy. All Rights Reserved.</p>
+            <p>Likoni-Ukunda Road, Mombasa, Kenya.</p>
+        </div>
     </footer>
 
-    <a href="https://wa.me/254702242291" class="whatsapp-btn" target="_blank">
+    <a href="https://wa.me/254711638425" class="whatsapp-btn" target="_blank">
         <i class="fab fa-whatsapp"></i>
     </a>
 
     <script>
-        function toggleMenu() {
-            const menu = document.getElementById('nav-menu');
-            menu.classList.toggle('active');
-        }
+        function toggleMenu() { document.getElementById('nav-menu').classList.toggle('active'); }
     </script>
 </body>
 </html>
