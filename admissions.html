@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admissions | FPFK Bethania Academy</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <div class="top-header">
+        <h1>ADMISSIONS & ENROLLMENT</h1>
+    </div>
+
+    <header>
+        <div class="nav-container">
+            <div class="logo-box">
+                <img src="images/logo.jpeg" alt="School Logo" class="profile-logo">
+            </div>
+            <button class="menu-btn" onclick="toggleMenu()">
+                <i class="fas fa-bars"></i>
+            </button>
+            <nav id="nav-menu">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="academics.html">Academics</a></li>
+                    <li><a href="admissions.html">Admissions</a></li>
+                    <li><a href="activities.html">Co-Curricular</a></li>
+                    <li><a href="library.html">Library</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="about-container">
+        
+        <div class="motto-section">
+            <h2 class="motto-text">2026 Admissions Open</h2>
+            <p>Applications are now being accepted for <strong>Pre-Primary, Primary, and Junior Secondary School (Grade 7-9)</strong>.</p>
+        </div>
+
+        <div class="info-card" style="margin-bottom: 30px; background: #fffde7; border-top-color: #fbc02d;">
+            <i class="fas fa-file-pdf fa-3x" style="color: #fbc02d;"></i>
+            <h3>Download Admission Materials</h3>
+            <p>You can download the official admission letter below. Please print it, fill it out, and bring it to the school office.</p>
+            <br>
+            <a href="admission-letter.pdf" download class="welcome-btn" style="background: #fbc02d; color: #333;">
+                <i class="fas fa-download"></i> Download Admission Letter (PDF)
+            </a>
+        </div>
+
+        <div class="info-grid">
+            <div class="info-card">
+                <i class="fas fa-tasks fa-2x"></i>
+                <h3>The Enrollment Process</h3>
+                <ol style="text-align: left; padding-left: 20px; font-size: 0.9rem; line-height: 2;">
+                    <li>Pick or download the Admission Form.</li>
+                    <li>Submit the completed form with required documents.</li>
+                    <li>Learner undergoes a placement interview.</li>
+                    <li>Payment of admission and tuition fees.</li>
+                    <li>Official issuance of school uniform and booklist.</li>
+                </ol>
+            </div>
+
+            <div class="info-card">
+                <i class="fas fa-clipboard-check fa-2x"></i>
+                <h3>Admission Requirements</h3>
+                <ul style="text-align: left; padding-left: 20px; font-size: 0.9rem; line-height: 2;">
+                    <li>Original Birth Certificate & 2 Copies.</li>
+                    <li>NEMIS Number / UPI Number.</li>
+                    <li>Assessment reports from previous school.</li>
+                    <li>3 Recent Passport-size photographs.</li>
+                    <li>Fully filled Medical Examination form.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="values-section">
+            <h3>Fee Payment Information</h3>
+            <p>For security and transparency, all school fees should be paid through the following methods:</p>
+            <div class="values-list" style="margin-top: 15px;">
+                <span><i class="fas fa-university"></i> Bank Deposit</span>
+                <span><i class="fas fa-mobile-alt"></i> M-Pesa Paybill</span>
+                <span><i class="fas fa-money-check"></i> Banker's Cheque</span>
+            </div>
+            <p style="margin-top: 15px; font-size: 0.85rem; color: #666;">*Cash payments are not accepted at the school office.</p>
+        </div>
+
+        <div class="contact-card">
+            <h3>Need Help with Admission?</h3>
+            <p>Our admissions officer is available to guide you through the process.</p>
+            <p><i class="fas fa-phone"></i> +254 711 638 425</p>
+            <a href="https://wa.me/254711638425" class="welcome-btn" style="background: #25D366; border: none; margin-top: 15px;">
+                <i class="fab fa-whatsapp"></i> Chat via WhatsApp
+            </a>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2026 FPFK Bethania Academy. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById('nav-menu');
+            menu.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>
