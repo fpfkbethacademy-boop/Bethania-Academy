@@ -7,116 +7,53 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        .file-list-container {
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            margin-top: 20px;
-        }
-        .file-item {
-            display: flex;
-            align-items: center;
-            padding: 12px;
-            border-bottom: 1px solid #eee;
-            text-decoration: none;
-            color: #333;
-            transition: 0.2s;
-        }
-        .file-item:hover {
-            background: #f0f7ff;
-            color: #1976d2;
-        }
-        .file-item i {
-            margin-right: 15px;
-            font-size: 1.2rem;
-            color: #d32f2f; /* PDF Red */
-        }
-        .back-link {
-            display: inline-block;
-            margin-top: 20px;
-            color: #1976d2;
-            text-decoration: none;
-            font-weight: bold;
-        }
+        .file-list-container { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin-top: 20px; }
+        .file-item { display: flex; align-items: center; padding: 12px; border-bottom: 1px solid #eee; text-decoration: none; color: #333; transition: 0.2s; }
+        .file-item:hover { background: #f0f7ff; color: #1976d2; }
+        .file-item i { margin-right: 15px; font-size: 1.2rem; color: #d32f2f; }
+        .back-link { display: inline-block; margin-top: 20px; color: #1976d2; text-decoration: none; font-weight: bold; }
     </style>
 </head>
 <body>
-
-    <div class="top-header">
-        <h1 id="folder-title">Resource Folder</h1>
-    </div>
-
+    <div class="top-header"> <h1 id="folder-title">Resource Repository</h1> </div>
     <div class="about-container">
         <div class="file-list-container">
-            <h2 id="grade-heading" style="color: #1976d2; margin-bottom: 20px;">Scanning Folder...</h2>
-            
-            <div id="file-list-display">
-                <p>Please wait, accessing documents...</p>
-            </div>
-
+            <h2 id="grade-heading" style="color: #1976d2; margin-bottom: 20px;">Available Files</h2>
+            <div id="file-list-display"></div>
             <a href="library.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to Library</a>
         </div>
     </div>
 
     <script>
-        // 1. Capture the Grade from the URL (e.g., view-folder.html?grade=G1)
         const params = new URLSearchParams(window.location.search);
-        const grade = params.get('grade') || 'Resources';
-        
+        const grade = params.get('grade') || 'PP1';
         document.getElementById('folder-title').innerText = grade + " Repository";
-        document.getElementById('grade-heading').innerText = "Available Files for " + grade;
+        document.getElementById('grade-heading').innerText = "Documents for " + grade;
 
-        async function fetchFolderContents() {
-            const display = document.getElementById('file-list-display');
-            const path = `documents/${grade}/`;
+        // --- EDIT THIS PART ONLY WHEN YOU ADD NEW FILES ---
+        const schoolFiles = {
+            'PP1': ['Welcome-to-PP1.pdf'],
+            'PP2': ['Coloring-Exercise.pdf', 'Alphabet-Tracing.pdf'],
+            'G1':  ['Math-Homework-Week1.pdf'],
+            'G6':  ['KPSEA-Revision-Science.pdf']
+            // Add other grades here as needed
+        };
+        // --------------------------------------------------
 
-            try {
-                // Fetch the directory listing from the server
-                const response = await fetch(path);
-                const html = await response.text();
-                
-                // Parse the HTML returned by the server to find file links
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(html, 'text/html');
-                const links = Array.from(doc.querySelectorAll('a'));
-                
-                display.innerHTML = ""; // Clear the loading message
-                let fileCount = 0;
+        const display = document.getElementById('file-list-display');
+        const files = schoolFiles[grade] || [];
 
-                links.forEach(link => {
-                    const fileName = link.getAttribute('href');
-                    
-                    // Filter: Only show actual files (PDF, Doc, JPG) and ignore system folders
-                    if (fileName.includes('.') && !fileName.startsWith('..') && !fileName.endsWith('/')) {
-                        fileCount++;
-                        // Clean up the name for display (remove %20 and extensions)
-                        const displayName = decodeURIComponent(fileName);
-                        
-                        display.innerHTML += `
-                            <a href="${path}${fileName}" class="file-item" target="_blank">
-                                <i class="fas fa-file-pdf"></i>
-                                <span>${displayName}</span>
-                            </a>`;
-                    }
-                });
-
-                if (fileCount === 0) {
-                    display.innerHTML = `
-                        <div style="text-align:center; padding: 20px;">
-                            <i class="fas fa-folder-open" style="font-size: 3rem; color: #ccc;"></i>
-                            <p style="margin-top:10px; color:#777;">This folder is currently empty.<br>Files uploaded to <b>documents/${grade}/</b> will appear here automatically.</p>
-                        </div>`;
-                }
-
-            } catch (err) {
-                display.innerHTML = "<p>Unable to load files. Please ensure the folder structure exists on GitHub.</p>";
-            }
+        if (files.length > 0) {
+            files.forEach(fileName => {
+                display.innerHTML += `
+                    <a href="documents/${grade}/${fileName}" class="file-item" target="_blank">
+                        <i class="fas fa-file-pdf"></i>
+                        <span>${fileName.replace(/-/g, ' ')}</span>
+                    </a>`;
+            });
+        } else {
+            display.innerHTML = "<p>No files uploaded for this grade yet. Check back soon!</p>";
         }
-
-        // Run the function when the page loads
-        window.onload = fetchFolderContents;
     </script>
-
 </body>
 </html>
