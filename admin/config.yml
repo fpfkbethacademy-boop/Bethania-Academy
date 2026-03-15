@@ -2,7 +2,8 @@ backend:
   name: github
   repo: pm6482545-lang/Bethania-Academy
   branch: main
-  base_url: https://api.netlify.com
+  # This new link fixes the "Netlify Not Found" error
+  base_url: https://decap-cms-github-backend.vercel.app
   auth_endpoint: /auth
 
 media_folder: "images/uploads"
