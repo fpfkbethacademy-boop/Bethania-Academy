@@ -2,10 +2,8 @@ backend:
   name: github
   repo: pm6482545-lang/Bethania-Academy
   branch: main
-  # These two lines below are required for the Login button to work
   base_url: https://api.netlify.com
   auth_endpoint: /auth
-  site_domain: pm6482545-lang.github.io/Bethania-Academy/
 
 media_folder: "images/uploads"
 public_folder: "/images/uploads"
