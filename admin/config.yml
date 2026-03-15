@@ -1,17 +1,20 @@
 backend:
   name: github
-  repo: pm6482545-lang/Bethania-Academy # This matches your GitHub repository
-  branch: main # This is your active branch
+  repo: pm6482545-lang/Bethania-Academy
+  branch: main
+  # These two lines below are required for the Login button to work
+  base_url: https://api.netlify.com
+  auth_endpoint: /auth
   site_domain: pm6482545-lang.github.io/Bethania-Academy/
 
-media_folder: "images/uploads" # Where school photos will be stored
+media_folder: "images/uploads"
 public_folder: "/images/uploads"
 
 collections:
   - name: "announcements"
     label: "School Announcements"
-    folder: "announcements" # The folder where news files will go
-    create: true # Allows the school to create NEW posts
+    folder: "announcements"
+    create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     fields:
       - {label: "Headline", name: "title", widget: "string"}
