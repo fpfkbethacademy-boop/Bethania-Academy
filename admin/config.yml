@@ -1,6 +1,6 @@
 backend:
-  name: github
-  repo: pm6482545-lang/Bethania-Academy
+  name: git-gateway
+  # This tells the site to use the Identity service you just turned on
   branch: main
 
 media_folder: "images/uploads"
