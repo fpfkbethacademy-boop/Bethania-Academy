@@ -7,6 +7,10 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
+        <div style="background-color:#f8f9fa;border-left:5px solid #004d00; padding:20px;margin:20pxo;">
+        <h3 style="color: #004d00; margin-top: 0;">Latest school announcements</p>
+        <p id="news-box" style="font-size:1.2rem; font-weight:bold;">Loading news...</p>
+        </div>
         /* Styles for the News & Announcements section */
         .announcements-section {
             padding: 60px 20px;
@@ -116,7 +120,7 @@
     <section class="announcements-section">
         <div class="container">
             <h2 style="text-align: center; color: #2e7d32;"><i class="fas fa-bullhorn"></i> Latest School Announcements</h2>
-            <div id="news-list" class="news-grid">
+            <div id="news-box" class="news-grid">
                 <p style="text-align: center; color: #666;">
                     <i class="fas fa-spinner fa-spin"></i> Checking for new updates...
                 </p>
@@ -215,5 +219,16 @@
 
         document.addEventListener('DOMContentLoaded', loadAnnouncements);
     </script>
+  <script>
+  // This code pulls the text from your announcements.txt file
+  fetch('announcements.txt')
+    .then(response => response.text())
+    .then(data => {
+      document.getElementById('news-box').innerText = data;
+    })
+    .catch(err => {
+      document.getElementById('news-box').innerText = "Visit the office for latest updates.";
+    });
+</script>
 </body>
 </html>
