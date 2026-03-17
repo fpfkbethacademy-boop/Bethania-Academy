@@ -140,3 +140,33 @@ footer { background: #2c3e50; color: #fff; padding: 40px 10%; margin-top: 30px; 
     align-items: center;
     gap: 10px;
 }
+/* --- ANNOUNCEMENTS MENU BUTTON --- */
+
+/* Gives the button a gold color to make it stand out */
+.nav-announcement {
+    color: #d4af37 !important; 
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+}
+
+/* Adds a small space between the horn icon and the text */
+.nav-announcement i {
+    margin-right: 8px;
+}
+
+/* Hover effect: changes to school green when touched/clicked */
+.nav-announcement:hover {
+    color: #2e7d32 !important;
+    text-decoration: underline;
+}
+
+/* Mobile adjustments: ensures it fits well in the toggle menu */
+@media (max-width: 768px) {
+    .nav-announcement {
+        padding: 10px 0;
+        border-bottom: 1px solid #eee;
+        width: 100%;
+        justify-content: center;
+    }
+}
