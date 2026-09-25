@@ -2,394 +2,173 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Staff Admin | FPFK Bethania Academy</title>
-<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Admin Portal | FPFK Bethania Academy</title>
+<meta name="theme-color" content="#073d29">
 <link rel="icon" href="images/crest.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Lora:wght@600;700&family=Karla:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;0,700;1,500&family=Karla:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<!-- Supabase Client CDN -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 :root{
   --forest:#0d5c3f;--forest-deep:#073d29;--forest-darker:#052419;--forest-light:#0f8a5c;
   --mint:#e7f3ea;--gold:#c99a2e;--gold-light:#f0c85a;--ivory:#fbf8f1;--cream:#f4efe1;
-  --ink:#12241d;--ink-soft:#4a5c52;--muted:#6b7a72;--line:rgba(18,36,29,.14);
-  --white:#fff;--red:#b3402f;--shadow:0 18px 50px rgba(7,61,41,.14);--radius:16px;
+  --ink:#12241d;--ink-soft:#4a5c52;--muted:#6b7a72;--line:rgba(18,36,29,.12);
+  --white:#ffffff;--shadow:0 24px 60px rgba(7,61,41,.14);--radius:18px;--max:1000px;
 }
 *{box-sizing:border-box}
-body{margin:0;background:var(--ivory);color:var(--ink);font-family:'Karla',system-ui,sans-serif;line-height:1.55}
-h1,h2,h3{font-family:'Lora',Georgia,serif;font-weight:700;margin:0;color:var(--forest-deep)}
-button{font:inherit;cursor:pointer}
-input,select,textarea{font:inherit;width:100%;padding:12px 14px;border:1.5px solid var(--line);border-radius:10px;background:#fff;color:var(--ink)}
-input:focus,select:focus,textarea:focus{outline:none;border-color:var(--forest)}
-label{display:block;font-size:.84rem;font-weight:700;color:var(--ink-soft);margin-bottom:6px}
-.field{margin-bottom:16px}
-.btn{display:inline-flex;align-items:center;gap:8px;justify-content:center;padding:12px 22px;border-radius:999px;font-weight:800;font-size:.92rem;border:1.5px solid transparent;background:var(--forest);color:#fff;transition:.2s}
+body{margin:0;background:var(--ivory);color:var(--ink);font-family:'Karla',sans-serif;line-height:1.65}
+h1,h2,h3{font-family:'Lora',serif;color:var(--forest-deep)}
+.wrap{width:min(var(--max),92%);margin-inline:auto;padding:40px 0}
+.card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:35px;margin-bottom:30px;box-shadow:var(--shadow)}
+.form-group{margin-bottom:20px}
+label{display:block;font-weight:700;margin-bottom:8px;color:var(--forest-deep)}
+input,select,textarea{width:100%;padding:12px 16px;border:1px solid var(--line);border-radius:10px;font:inherit;background:var(--ivory)}
+input:focus,select:focus,textarea:focus{outline:3px solid var(--gold-light);border-color:var(--forest)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:14px 26px;border-radius:999px;font-weight:800;border:0;cursor:pointer;background:var(--forest);color:#fff;transition:.2s}
 .btn:hover{background:var(--forest-light)}
-.btn:disabled{opacity:.55;cursor:not-allowed}
-.btn-outline{background:#fff;border-color:var(--line);color:var(--forest-deep)}
-.btn-outline:hover{border-color:var(--forest)}
-.btn-danger{background:#fff;border-color:rgba(179,64,47,.4);color:var(--red)}
-.btn-danger:hover{background:#fdf1ef}
-.wrap{width:min(880px,92%);margin-inline:auto}
-
-/* ---- login screen ---- */
-#loginScreen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;background:linear-gradient(160deg,var(--forest-darker),var(--forest-deep) 60%)}
-.login-card{background:#fff;border-radius:20px;box-shadow:var(--shadow);padding:40px 34px;width:100%;max-width:380px}
-.login-card .brand{display:flex;align-items:center;gap:12px;margin-bottom:22px}
-.login-card .brand img{width:44px;height:44px;object-fit:contain}
-.login-card .brand span{font-family:'Lora',serif;font-weight:700;font-size:1.02rem;color:var(--forest-deep)}
-.login-card h1{font-size:1.3rem;margin-bottom:4px}
-.login-card p.sub{color:var(--muted);font-size:.88rem;margin-bottom:24px}
-.login-err{color:var(--red);font-size:.85rem;margin-top:10px;display:none}
-
-/* ---- dashboard ---- */
-#dashScreen{display:none}
-.topbar{background:var(--forest-darker);color:#fff;padding:16px 0}
-.topbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px}
-.topbar .brand{display:flex;align-items:center;gap:10px;font-family:'Lora',serif;font-weight:700}
-.topbar .brand img{width:34px;height:34px;object-fit:contain;background:#fff;border-radius:8px;padding:3px}
-.who{font-size:.82rem;color:#cfe3d6}
-main{padding:36px 0 80px}
-.tabs{display:flex;gap:8px;margin-bottom:28px;flex-wrap:wrap}
-.tab{padding:10px 18px;border-radius:999px;background:#fff;border:1.5px solid var(--line);font-weight:700;font-size:.86rem;color:var(--ink-soft)}
-.tab.active{background:var(--forest);border-color:var(--forest);color:#fff}
-.panel{display:none}
-.panel.active{display:block}
-.card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:26px;margin-bottom:20px;box-shadow:0 6px 20px rgba(7,61,41,.06)}
-.card h2{font-size:1.15rem;margin-bottom:18px}
-.row{display:flex;gap:14px;flex-wrap:wrap}
-.row>.field{flex:1;min-width:200px}
-.msg{font-size:.85rem;margin-top:10px;padding:10px 12px;border-radius:8px;display:none}
-.msg.ok{display:block;background:var(--mint);color:var(--forest-deep)}
-.msg.err{display:block;background:#fdf1ef;color:var(--red)}
-
-.list{display:grid;gap:10px}
-.item{display:flex;align-items:center;gap:14px;padding:14px;border:1px solid var(--line);border-radius:12px;background:#fdfcf9}
-.item img{width:52px;height:52px;object-fit:cover;border-radius:8px;flex:none;background:var(--mint)}
-.item .icon-doc{width:52px;height:52px;border-radius:8px;flex:none;background:var(--mint);display:grid;place-items:center;color:var(--forest);font-weight:800;font-size:.7rem}
-.item .meta{flex:1;min-width:0}
-.item .meta b{display:block;font-size:.92rem;color:var(--ink)}
-.item .meta span{font-size:.78rem;color:var(--muted)}
-.item .actions{display:flex;gap:8px;flex:none}
-.item .actions button{padding:8px 14px;font-size:.8rem;border-radius:999px}
-.pill{display:inline-block;font-size:.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em;padding:3px 9px;border-radius:999px;background:var(--cream);color:var(--forest-deep);margin-right:6px}
-.pill.inactive{background:#f2f2ee;color:var(--muted)}
-.empty{color:var(--muted);font-size:.9rem;padding:18px 0;text-align:center}
-.spin{display:inline-block;width:16px;height:16px;border:2.5px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:sp .7s linear infinite}
-@keyframes sp{to{transform:rotate(360deg)}}
+.btn-gold{background:linear-gradient(135deg,var(--gold-light),var(--gold));color:var(--forest-darker)}
+.top-bar{background:var(--forest-darker);color:#fff;padding:20px 0;text-align:center}
+.top-bar h1{color:#fff;font-size:1.5rem}
+.alert{padding:12px 16px;border-radius:10px;margin-bottom:20px;font-weight:700;display:none}
+.alert-success{background:var(--mint);color:var(--forest)}
+.alert-error{background:#fde8e8;color:#c53030}
 </style>
 </head>
 <body>
 
-<!-- ============ LOGIN ============ -->
-<div id="loginScreen">
-  <div class="login-card">
-    <div class="brand"><img src="images/crest.png" alt=""><span>FPFK Bethania Academy</span></div>
-    <h1>Staff Admin</h1>
-    <p class="sub">Sign in with your staff account to manage announcements and media.</p>
-    <form id="loginForm">
-      <div class="field"><label for="email">Email</label><input id="email" type="email" required autocomplete="username"></div>
-      <div class="field"><label for="password">Password</label><input id="password" type="password" required autocomplete="current-password"></div>
-      <button class="btn" type="submit" id="loginBtn" style="width:100%">Sign in</button>
-      <p class="login-err" id="loginErr"></p>
-    </form>
-  </div>
+<div class="top-bar">
+    <h1>FPFK Bethania Academy — Staff &amp; Admin Portal</h1>
 </div>
 
-<!-- ============ DASHBOARD ============ -->
-<div id="dashScreen">
-  <div class="topbar">
-    <div class="wrap">
-      <div class="brand"><img src="images/crest.png" alt="">Staff Admin</div>
-      <div style="display:flex;align-items:center;gap:16px">
-        <span class="who" id="whoami"></span>
-        <button class="btn btn-outline" id="logoutBtn" style="padding:8px 16px;font-size:.82rem">Sign out</button>
-      </div>
-    </div>
-  </div>
-  <main>
-    <div class="wrap">
-      <div class="tabs">
-        <button class="tab active" data-panel="announce">Announcements</button>
-        <button class="tab" data-panel="media">Gallery / Activities / Library</button>
-      </div>
+<div class="wrap">
+    <div id="statusAlert" class="alert"></div>
 
-      <!-- ---- Announcements panel ---- -->
-      <section class="panel active" id="panel-announce">
-        <div class="card">
-          <h2>Post a new announcement</h2>
-          <form id="announceForm">
-            <div class="field">
-              <label for="annMessage">Message (shown in the scrolling banner on the homepage)</label>
-              <textarea id="annMessage" rows="2" required placeholder="e.g. Term 2 opens on 12 January 2026"></textarea>
+    <!-- LIBRARY UPLOAD SECTION -->
+    <div class="card">
+        <h2><i class="fas fa-book"></i> Upload Library Revision Material</h2>
+        <p style="color:var(--ink-soft);margin-bottom:25px;">Upload exams, notes, or revision guides organized by Grade and Term for learners and teachers.</p>
+        
+        <form id="libraryUploadForm">
+            <div class="form-group">
+                <label for="libTitle">Document Title</label>
+                <input type="text" id="libTitle" required placeholder="e.g. Grade 7 Mathematics Opener Exam">
             </div>
-            <button class="btn" type="submit" id="annBtn">Post announcement</button>
-            <p class="msg" id="annMsg"></p>
-          </form>
-        </div>
-        <div class="card">
-          <h2>Current announcements</h2>
-          <div class="list" id="annList"><p class="empty">Loading&hellip;</p></div>
-        </div>
-      </section>
 
-      <!-- ---- Media panel ---- -->
-      <section class="panel" id="panel-media">
-        <div class="card">
-          <h2>Upload a photo or file</h2>
-          <form id="mediaForm">
-            <div class="row">
-              <div class="field">
-                <label for="medTitle">Title / caption</label>
-                <input id="medTitle" type="text" required placeholder="e.g. Cultural Day 2026">
-              </div>
-              <div class="field">
-                <label for="medCategory">Where should it appear?</label>
-                <select id="medCategory" required>
-                  <option value="gallery">Gallery</option>
-                  <option value="activities">Activities</option>
-                  <option value="library">Library</option>
-                </select>
-              </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+                <div class="form-group">
+                    <label for="libGrade">Select Grade</label>
+                    <select id="libGrade" required>
+                        <option value="">-- Choose Grade --</option>
+                        <option value="Pre-Primary">Pre-Primary (PP1 &amp; PP2)</option>
+                        <option value="Grade 1">Grade 1</option>
+                        <option value="Grade 2">Grade 2</option>
+                        <option value="Grade 3">Grade 3</option>
+                        <option value="Grade 4">Grade 4</option>
+                        <option value="Grade 5">Grade 5</option>
+                        <option value="Grade 6">Grade 6</option>
+                        <option value="Grade 7">Grade 7 (Junior Secondary)</option>
+                        <option value="Grade 8">Grade 8 (Junior Secondary)</option>
+                        <option value="Grade 9">Grade 9 (Junior Secondary)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="libTerm">Select Term</label>
+                    <select id="libTerm" required>
+                        <option value="">-- Choose Term --</option>
+                        <option value="Term 1">Term 1</option>
+                        <option value="Term 2">Term 2</option>
+                        <option value="Term 3">Term 3</option>
+                    </select>
+                </div>
             </div>
-            <div class="field">
-              <label for="medFile">File (image or document)</label>
-              <input id="medFile" type="file" required accept="image/*,.pdf,.doc,.docx">
+
+            <div class="form-group">
+                <label for="libUrl">Document URL (PDF / Google Drive / File Link)</label>
+                <input type="url" id="libUrl" required placeholder="https://...">
             </div>
-            <button class="btn" type="submit" id="medBtn">Upload</button>
-            <p class="msg" id="medMsg"></p>
-          </form>
-        </div>
-        <div class="card">
-          <h2>Uploaded media</h2>
-          <div class="row" style="margin-bottom:16px">
-            <div class="field" style="max-width:220px">
-              <label for="medFilter">Filter by section</label>
-              <select id="medFilter">
-                <option value="">All sections</option>
-                <option value="gallery">Gallery</option>
-                <option value="activities">Activities</option>
-                <option value="library">Library</option>
-              </select>
+
+            <div class="form-group">
+                <label for="libDesc">Short Description</label>
+                <textarea id="libDesc" rows="3" placeholder="Brief details about the resource..."></textarea>
             </div>
-          </div>
-          <div class="list" id="medList"><p class="empty">Loading&hellip;</p></div>
-        </div>
-      </section>
+
+            <button type="submit" class="btn btn-gold">Publish to Library</button>
+        </form>
     </div>
-  </main>
+
+    <!-- ANNOUNCEMENTS BROADCAST SECTION -->
+    <div class="card">
+        <h2><i class="fas fa-bullhorn"></i> Broadcast School Announcement</h2>
+        <p style="color:var(--ink-soft);margin-bottom:25px;">Post updates that will instantly appear on the public Announcements page and live ticker.</p>
+        
+        <form id="announcementForm">
+            <div class="form-group">
+                <label for="annMessage">Announcement Message &amp; Notice</label>
+                <textarea id="annMessage" rows="4" required placeholder="Enter official notice details here..."></textarea>
+            </div>
+            <button type="submit" class="btn">Publish Announcement</button>
+        </form>
+    </div>
+
+    <div style="text-align:center;">
+        <a href="index.html" class="btn" style="background:var(--muted)">Return to Homepage</a>
+    </div>
 </div>
 
 <script>
-(function () {
-  'use strict';
+  const SUPABASE_URL = 'https://avspdkeozxuxzbmegqwl.supabase.co';
+  const SUPABASE_ANON_KEY = 'sb_publishable_K9s_MVcCe1wtUNUO1YgRbA_QtoBZYRR';
+  const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-  // ---- Supabase client (same project as the public site) ----
-  var SUPABASE_URL = 'https://avspdkeozxuxzbmegqwl.supabase.co';
-  var SUPABASE_ANON_KEY = 'sb_publishable_K9s_MVcCe1wtUNUO1YgRbA_QtoBZYRR';
-  var sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-  var MEDIA_BUCKET = 'website-images';
-
-  var $ = function (id) { return document.getElementById(id); };
-
-  function showMsg(el, text, ok) {
-    el.textContent = text;
-    el.className = 'msg ' + (ok ? 'ok' : 'err');
+  function showAlert(msg, isError = false) {
+    const el = document.getElementById('statusAlert');
+    el.textContent = msg;
+    el.className = 'alert ' + (isError ? 'alert-error' : 'alert-success');
+    el.style.display = 'block';
+    setTimeout(() => { el.style.display = 'none'; }, 5000);
   }
 
-  // ================= AUTH =================
-  function showLogin() { $('loginScreen').style.display = 'flex'; $('dashScreen').style.display = 'none'; }
-  function showDash(user) {
-    $('loginScreen').style.display = 'none';
-    $('dashScreen').style.display = 'block';
-    $('whoami').textContent = user && user.email ? user.email : '';
-    loadAnnouncements();
-    loadMedia();
-  }
-
-  sb.auth.getSession().then(function (res) {
-    var session = res && res.data && res.data.session;
-    if (session) showDash(session.user); else showLogin();
-  });
-  sb.auth.onAuthStateChange(function (event, session) {
-    if (session) showDash(session.user); else showLogin();
-  });
-
-  $('loginForm').addEventListener('submit', function (e) {
+  // Handle Library Upload
+  document.getElementById('libraryUploadForm').addEventListener('submit', async (e) => {
     e.preventDefault();
-    var btn = $('loginBtn');
-    var err = $('loginErr');
-    err.style.display = 'none';
-    btn.disabled = true; btn.innerHTML = '<span class="spin"></span> Signing in&hellip;';
-    sb.auth.signInWithPassword({
-      email: $('email').value.trim(),
-      password: $('password').value
-    }).then(function (res) {
-      btn.disabled = false; btn.textContent = 'Sign in';
-      if (res.error) {
-        err.textContent = res.error.message || 'Could not sign in. Check your email and password.';
-        err.style.display = 'block';
-      }
-    });
-  });
+    const title = document.getElementById('libTitle').value;
+    const grade = document.getElementById('libGrade').value;
+    const term = document.getElementById('libTerm').value;
+    const file_url = document.getElementById('libUrl').value;
+    const description = document.getElementById('libDesc').value;
 
-  $('logoutBtn').addEventListener('click', function () { sb.auth.signOut(); });
+    const { error } = await supabaseClient
+      .from('library_materials')
+      .insert([{ title, grade, term, file_url, description }]);
 
-  // ================= TABS =================
-  var tabs = Array.prototype.slice.call(document.querySelectorAll('.tab'));
-  tabs.forEach(function (t) {
-    t.addEventListener('click', function () {
-      tabs.forEach(function (x) { x.classList.remove('active'); });
-      t.classList.add('active');
-      document.querySelectorAll('.panel').forEach(function (p) { p.classList.remove('active'); });
-      $('panel-' + t.getAttribute('data-panel')).classList.add('active');
-    });
-  });
-
-  // ================= ANNOUNCEMENTS =================
-  function timeAgo(iso) {
-    var d = new Date(iso);
-    return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) +
-      ' \u2022 ' + d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
-  }
-
-  function loadAnnouncements() {
-    var list = $('annList');
-    sb.from('announcements').select('*').order('created_at', { ascending: false }).then(function (res) {
-      if (res.error) { list.innerHTML = '<p class="empty">Could not load announcements (' + res.error.message + ')</p>'; return; }
-      var rows = res.data || [];
-      if (!rows.length) { list.innerHTML = '<p class="empty">No announcements yet.</p>'; return; }
-      list.innerHTML = '';
-      rows.forEach(function (r) {
-        var div = document.createElement('div');
-        div.className = 'item';
-        div.innerHTML =
-          '<div class="meta">' +
-            '<span class="pill' + (r.active ? '' : ' inactive') + '">' + (r.active ? 'Live' : 'Hidden') + '</span>' +
-            '<b>' + escapeHtml(r.message) + '</b>' +
-            '<span>' + timeAgo(r.created_at) + '</span>' +
-          '</div>' +
-          '<div class="actions">' +
-            '<button class="btn btn-outline" data-toggle="' + r.id + '" data-active="' + r.active + '">' + (r.active ? 'Hide' : 'Show') + '</button>' +
-            '<button class="btn btn-danger" data-del="' + r.id + '">Delete</button>' +
-          '</div>';
-        list.appendChild(div);
-      });
-    });
-  }
-
-  $('announceForm').addEventListener('submit', function (e) {
-    e.preventDefault();
-    var btn = $('annBtn'), msg = $('annMsg');
-    var text = $('annMessage').value.trim();
-    if (!text) return;
-    btn.disabled = true; btn.innerHTML = '<span class="spin"></span> Posting&hellip;';
-    sb.from('announcements').insert({ message: text, active: true }).then(function (res) {
-      btn.disabled = false; btn.textContent = 'Post announcement';
-      if (res.error) { showMsg(msg, 'Could not post: ' + res.error.message, false); return; }
-      showMsg(msg, 'Announcement posted \u2014 it will appear on the homepage banner shortly.', true);
-      $('annMessage').value = '';
-      loadAnnouncements();
-    });
-  });
-
-  $('annList').addEventListener('click', function (e) {
-    var toggleId = e.target.getAttribute('data-toggle');
-    var delId = e.target.getAttribute('data-del');
-    if (toggleId) {
-      var makeActive = e.target.getAttribute('data-active') !== 'true';
-      sb.from('announcements').update({ active: makeActive }).eq('id', toggleId).then(function () { loadAnnouncements(); });
-    }
-    if (delId) {
-      if (!confirm('Delete this announcement?')) return;
-      sb.from('announcements').delete().eq('id', delId).then(function () { loadAnnouncements(); });
+    if (error) {
+      showAlert('Error uploading material: ' + error.message, true);
+    } else {
+      showAlert('Library material successfully published under ' + grade + ' - ' + term + '!');
+      document.getElementById('libraryUploadForm').reset();
     }
   });
 
-  // ================= MEDIA =================
-  function escapeHtml(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
-
-  function publicUrl(path) { return sb.storage.from(MEDIA_BUCKET).getPublicUrl(path).data.publicUrl; }
-
-  function loadMedia() {
-    var list = $('medList');
-    var filter = $('medFilter').value;
-    var q = sb.from('website_media').select('*').order('created_at', { ascending: false });
-    if (filter) q = q.eq('category', filter);
-    q.then(function (res) {
-      if (res.error) { list.innerHTML = '<p class="empty">Could not load media (' + res.error.message + ')</p>'; return; }
-      var rows = res.data || [];
-      if (!rows.length) { list.innerHTML = '<p class="empty">No files uploaded yet.</p>'; return; }
-      list.innerHTML = '';
-      rows.forEach(function (r) {
-        var div = document.createElement('div');
-        div.className = 'item';
-        var thumb = r.file_type === 'image'
-          ? '<img src="' + publicUrl(r.file_path) + '" alt="">'
-          : '<div class="icon-doc">FILE</div>';
-        div.innerHTML =
-          thumb +
-          '<div class="meta">' +
-            '<span class="pill">' + escapeHtml(r.category || 'gallery') + '</span>' +
-            '<b>' + escapeHtml(r.title) + '</b>' +
-            '<span>' + timeAgo(r.created_at) + '</span>' +
-          '</div>' +
-          '<div class="actions">' +
-            '<a class="btn btn-outline" href="' + publicUrl(r.file_path) + '" target="_blank" rel="noopener" style="text-decoration:none">View</a>' +
-            '<button class="btn btn-danger" data-del="' + r.id + '" data-path="' + escapeHtml(r.file_path) + '">Delete</button>' +
-          '</div>';
-        list.appendChild(div);
-      });
-    });
-  }
-
-  $('medFilter').addEventListener('change', loadMedia);
-
-  $('mediaForm').addEventListener('submit', function (e) {
+  // Handle Announcements Broadcast
+  document.getElementById('announcementForm').addEventListener('submit', async (e) => {
     e.preventDefault();
-    var btn = $('medBtn'), msg = $('medMsg');
-    var file = $('medFile').files[0];
-    var title = $('medTitle').value.trim();
-    var category = $('medCategory').value;
-    if (!file || !title) return;
-    btn.disabled = true; btn.innerHTML = '<span class="spin"></span> Uploading&hellip;';
-    var fileType = file.type.indexOf('image') === 0 ? 'image' : 'document';
-    var safeName = file.name.replace(/[^a-zA-Z0-9.\-_]/g, '_');
-    var path = category + '/' + Date.now() + '-' + safeName;
+    const message = document.getElementById('annMessage').value;
 
-    sb.storage.from(MEDIA_BUCKET).upload(path, file, { cacheControl: '3600', upsert: false })
-      .then(function (upRes) {
-        if (upRes.error) throw upRes.error;
-        return sb.from('website_media').insert({
-          title: title, file_path: path, file_type: fileType, category: category
-        });
-      })
-      .then(function (insRes) {
-        if (insRes.error) throw insRes.error;
-        btn.disabled = false; btn.textContent = 'Upload';
-        showMsg(msg, 'Uploaded \u2014 it will now appear on the ' + category + ' page.', true);
-        $('mediaForm').reset();
-        loadMedia();
-      })
-      .catch(function (err) {
-        btn.disabled = false; btn.textContent = 'Upload';
-        showMsg(msg, 'Upload failed: ' + (err.message || err), false);
-      });
+    const { error } = await supabaseClient
+      .from('announcements')
+      .insert([{ message, active: true }]);
+
+    if (error) {
+      showAlert('Error posting announcement: ' + error.message, true);
+    } else {
+      showAlert('Announcement successfully broadcasted to notice board!');
+      document.getElementById('announcementForm').reset();
+    }
   });
-
-  $('medList').addEventListener('click', function (e) {
-    var delId = e.target.getAttribute('data-del');
-    var path = e.target.getAttribute('data-path');
-    if (!delId) return;
-    if (!confirm('Delete this file? This removes it from the website permanently.')) return;
-    sb.storage.from(MEDIA_BUCKET).remove([path]).then(function () {
-      return sb.from('website_media').delete().eq('id', delId);
-    }).then(function () { loadMedia(); });
-  });
-
-})();
 </script>
 </body>
 </html>
