@@ -1,136 +1,537 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Library & Resources | FPFK Bethania Academy</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        .resource-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-            gap: 15px;
-            margin-top: 20px;
-        }
-        .grade-link {
-            background: #f8f9fa;
-            border: 2px solid #1976d2;
-            color: #1976d2;
-            padding: 15px 10px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: bold;
-            text-align: center;
-            transition: 0.3s;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-        }
-        .grade-link:hover {
-            background: #1976d2;
-            color: white;
-            transform: translateY(-3px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-        .grade-link i {
-            font-size: 1.5rem;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Library & Digital Resources | FPFK Bethania Academy</title>
+<meta name="description" content="The Bethania Knowledge Center — physical study zones and a live digital revision hub with CBC resources for PP1 to Grade 9, FPFK Bethania Academy, Likoni, Mombasa.">
+<meta name="theme-color" content="#073d29">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Library & Digital Resources | FPFK Bethania Academy">
+<meta property="og:description" content="Physical study zones and a live digital revision hub with CBC resources for PP1 to Grade 9.">
+<meta property="og:image" content="images/library-main.jpg">
+<link rel="canonical" href="https://fpfkbethaniaacademy.ac.ke/library.html">
+<link rel="icon" href="images/crest.png">
+<link rel="apple-touch-icon" href="images/crest.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Karla:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<!-- Supabase Client CDN (same project used across the site) -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+/* =========================================================
+   FPFK BETHANIA ACADEMY — shared design system (interior pages)
+   ========================================================= */
+:root{
+  --forest:#0d5c3f;--forest-deep:#073d29;--forest-darker:#052419;--forest-light:#0f8a5c;
+  --mint:#e7f3ea;--gold:#c99a2e;--gold-light:#f0c85a;--ivory:#fbf8f1;--cream:#f4efe1;
+  --ink:#12241d;--ink-soft:#4a5c52;--muted:#6b7a72;--line:rgba(18,36,29,.12);--white:#ffffff;
+  --shadow:0 24px 60px rgba(7,61,41,.14);--shadow-lg:0 34px 90px rgba(7,61,41,.22);
+  --radius:18px;--max:1180px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:110px}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--ivory);color:var(--ink);font-family:'Karla',system-ui,-apple-system,'Segoe UI',sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+h1,h2,h3,h4,.display{font-family:'Lora',Georgia,serif;font-weight:700;line-height:1.16;margin:0;color:var(--forest-deep)}
+p{margin:0}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+button{font:inherit;cursor:pointer;background:none;border:0;color:inherit}
+:focus-visible{outline:3px solid var(--gold-light);outline-offset:3px;border-radius:6px}
+.wrap{width:min(var(--max),92%);margin-inline:auto}
+.ic{width:1.1em;height:1.1em;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.ic.fill{fill:currentColor;stroke:none}
+section{padding:88px 0;position:relative}
+.skip{position:absolute;left:-999px;top:8px;background:#fff;color:var(--forest-deep);padding:10px 16px;border-radius:8px;font-weight:700;z-index:3000}
+.skip:focus{left:8px}
+.kicker{display:inline-flex;align-items:center;gap:10px;font-size:.84rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+.kicker::before{content:"";width:28px;height:3px;background:var(--gold);border-radius:2px;flex:none}
+.sec-head{max-width:700px;margin-bottom:40px}
+.sec-head h2{font-size:clamp(1.8rem,3.6vw,2.6rem)}
+.sec-head p{color:var(--ink-soft);margin-top:14px;font-size:1.05rem}
+.sec-head.center{margin-inline:auto;text-align:center}
+.sec-head.center .kicker{justify-content:center}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:14px 26px;border-radius:999px;font-weight:800;font-size:.92rem;border:1.5px solid transparent;transition:transform .22s,background .22s,border-color .22s,box-shadow .22s;white-space:nowrap}
+.btn:hover{transform:translateY(-3px)}
+.btn-gold{background:linear-gradient(135deg,var(--gold-light),var(--gold));color:var(--forest-darker);box-shadow:0 16px 34px rgba(201,154,46,.35)}
+.btn-forest{background:var(--forest);color:#fff;box-shadow:0 16px 34px rgba(13,92,63,.28)}
+.btn-forest:hover{background:var(--forest-light)}
+.btn-outline{border-color:var(--line);color:var(--forest-deep);background:#fff}
+.btn-outline:hover{border-color:var(--forest)}
+.btn-sm{padding:10px 18px;font-size:.84rem}
+
+/* nav */
+.nav{position:sticky;top:0;z-index:150;background:rgba(251,248,241,.94);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line);transition:box-shadow .3s}
+.nav.scrolled{box-shadow:0 8px 30px rgba(7,61,41,.1)}
+.nav-in{display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:82px}
+.brand{display:flex;align-items:center;gap:13px}
+.brand-mark{width:48px;height:48px;flex:none;display:grid;place-items:center;background:#fff;border-radius:13px;box-shadow:0 6px 16px rgba(7,61,41,.14);padding:5px}
+.brand-mark img{width:100%;height:100%;object-fit:contain}
+.brand-text{font-family:'Lora',serif;font-weight:700;font-size:1rem;line-height:1.18;color:var(--forest-deep)}
+.brand-text small{display:block;font-family:'Karla',sans-serif;font-weight:700;font-size:.64rem;letter-spacing:.14em;color:var(--gold);margin-top:3px;text-transform:uppercase}
+.nav-links{display:flex;gap:18px;list-style:none;margin:0;padding:0;font-size:.87rem;font-weight:700;color:var(--ink-soft);white-space:nowrap}
+.nav-links a{position:relative;padding:6px 0;transition:color .2s}
+.nav-links a::after{content:"";position:absolute;left:0;right:0;bottom:-3px;height:2px;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .25s}
+.nav-links a:hover,.nav-links a.active{color:var(--forest-deep)}
+.nav-links a:hover::after,.nav-links a.active::after{transform:scaleX(1)}
+.nav-links .announce-link{color:var(--gold);display:inline-flex;align-items:center;gap:6px}
+.nav-right{display:flex;align-items:center;gap:12px}
+.menu-btn{display:none;width:44px;height:44px;border-radius:12px;border:1px solid var(--line);background:#fff;place-items:center;font-size:1.2rem;color:var(--forest-deep);transition:.2s}
+.menu-btn:hover{border-color:var(--forest)}
+@media (max-width:1160px){.nav-links,.nav-right .btn{display:none}.menu-btn{display:grid}}
+
+.drawer-overlay{position:fixed;inset:0;z-index:199;background:rgba(5,20,14,.55);backdrop-filter:blur(3px);opacity:0;pointer-events:none;transition:opacity .35s ease}
+.drawer-overlay.open{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;right:0;bottom:0;z-index:200;width:min(400px,86vw);background:linear-gradient(165deg,var(--forest-darker),var(--forest-deep) 70%,#0a4a32);box-shadow:-28px 0 70px rgba(0,0,0,.45);transform:translateX(105%);transition:transform .45s cubic-bezier(.2,.75,.2,1);display:flex;flex-direction:column;padding:24px 26px calc(28px + env(safe-area-inset-bottom,0px));overflow-y:auto}
+.drawer.open{transform:translateX(0)}
+.drawer-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:26px}
+.drawer-brand{display:flex;align-items:center;gap:11px}
+.drawer-brand img{width:38px;height:38px;background:#fff;border-radius:9px;padding:3px}
+.drawer-brand span{font-family:'Lora',serif;color:#fff;font-weight:700;font-size:.98rem}
+.drawer-close{width:42px;height:42px;border-radius:11px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);color:#fff;display:grid;place-items:center;flex:none;transition:.2s}
+.drawer-close:hover{background:rgba(255,255,255,.18);transform:rotate(90deg)}
+.drawer nav{display:flex;flex-direction:column}
+.drawer nav a{font-family:'Lora',serif;font-weight:700;font-size:1.28rem;color:#fff;padding:12px 4px;border-bottom:1px solid rgba(255,255,255,.08);letter-spacing:-.01em;display:flex;align-items:center;justify-content:space-between}
+.drawer nav a svg{width:16px;height:16px;opacity:.6}
+.drawer nav a.gold{color:var(--gold-light)}
+.drawer .btn{margin-top:22px;font-family:'Karla',sans-serif;font-size:1rem;width:100%}
+.drawer-foot{margin-top:auto;padding-top:22px;display:flex;flex-direction:column;gap:14px}
+.drawer-social{display:flex;gap:10px}
+.drawer-social a{width:40px;height:40px;border-radius:10px;border:1px solid rgba(255,255,255,.2);color:#fff;display:grid;place-items:center;transition:.2s}
+.drawer-social a:hover{background:var(--gold);border-color:var(--gold);color:var(--forest-darker)}
+.drawer-foot small{color:#9fb6a7;font-size:.78rem}
+
+/* interior page hero */
+.pagehero{position:relative;min-height:46vh;display:flex;align-items:center;color:#fff;overflow:hidden;isolation:isolate;padding:70px 0}
+.pagehero::before{content:"";position:absolute;inset:0;z-index:0;background:
+  linear-gradient(150deg,rgba(5,36,25,.92) 0%,rgba(7,61,41,.86) 45%,rgba(13,92,63,.7) 100%),
+  url('images/library-main.jpg') center/cover no-repeat}
+.pagehero .wrap{position:relative;z-index:2;text-align:center}
+.pagehero .kicker{justify-content:center;color:var(--gold-light)}
+.pagehero .kicker::before{background:var(--gold-light)}
+.pagehero h1{font-size:clamp(2.1rem,5vw,3.4rem);color:#fff}
+.pagehero p{color:#dcebe1;max-width:600px;margin:18px auto 0;font-size:1.05rem}
+.crumb{display:flex;justify-content:center;gap:8px;font-size:.85rem;color:#c9dccf;margin-bottom:16px}
+.crumb a:hover{color:var(--gold-light)}
+
+/* filter chips */
+.chip-row{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:34px}
+.chip{padding:9px 18px;border-radius:999px;border:1.5px solid var(--line);background:#fff;font-weight:700;font-size:.86rem;color:var(--ink-soft);transition:.2s;display:inline-flex;align-items:center;gap:8px}
+.chip:hover{border-color:var(--forest)}
+.chip.active{background:var(--forest);border-color:var(--forest);color:#fff}
+.chip .cnt{background:rgba(0,0,0,.08);border-radius:999px;padding:1px 8px;font-size:.76rem}
+.chip.active .cnt{background:rgba(255,255,255,.22)}
+
+/* resource / media cards */
+.res-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:22px}
+.res-card{background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:0 10px 26px rgba(7,61,41,.06);transition:transform .25s,box-shadow .25s;display:flex;flex-direction:column}
+.res-card:hover{transform:translateY(-5px);box-shadow:0 22px 44px rgba(7,61,41,.14)}
+.res-thumb{aspect-ratio:4/3;background:var(--mint);display:grid;place-items:center;overflow:hidden;position:relative}
+.res-thumb img{width:100%;height:100%;object-fit:cover}
+.res-thumb .doc-ic{color:var(--forest);width:44px;height:44px}
+.res-body{padding:16px 18px 18px;display:flex;flex-direction:column;gap:10px;flex:1}
+.res-tag{align-self:flex-start;font-size:.72rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--gold);background:var(--cream);padding:4px 10px;border-radius:999px}
+.res-title{font-family:'Lora',serif;font-weight:700;font-size:1rem;color:var(--forest-deep);line-height:1.3}
+.res-date{font-size:.78rem;color:var(--muted)}
+.res-body .btn{margin-top:auto;width:100%}
+
+/* loading / empty / error states */
+.state-box{text-align:center;padding:56px 24px;border:1.5px dashed var(--line);border-radius:18px;background:#fff}
+.state-box .ic-wrap{width:56px;height:56px;border-radius:16px;background:var(--mint);color:var(--forest);display:grid;place-items:center;margin:0 auto 16px}
+.state-box h4{font-size:1.1rem;margin-bottom:6px}
+.state-box p{color:var(--muted);font-size:.92rem;max-width:360px;margin-inline:auto}
+.skeleton-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:22px}
+.skel-card{border-radius:16px;overflow:hidden;background:#fff;border:1px solid var(--line)}
+.skel-thumb{aspect-ratio:4/3;background:linear-gradient(100deg,#eef1ee 25%,#f6f7f5 37%,#eef1ee 63%);background-size:400% 100%;animation:shimmer 1.4s ease-in-out infinite}
+.skel-line{height:12px;margin:16px 18px;border-radius:6px;background:linear-gradient(100deg,#eef1ee 25%,#f6f7f5 37%,#eef1ee 63%);background-size:400% 100%;animation:shimmer 1.4s ease-in-out infinite}
+.skel-line.w60{width:60%}
+@keyframes shimmer{0%{background-position:100% 0}100%{background-position:-100% 0}}
+
+/* physical collection */
+.info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:26px}
+.info-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:0 10px 26px rgba(7,61,41,.06)}
+.info-card img{width:100%;border-radius:12px;margin-bottom:16px;aspect-ratio:16/10;object-fit:cover}
+.info-card h4{font-size:1.08rem;margin-bottom:8px}
+.info-card p{color:var(--ink-soft);font-size:.94rem}
+.alt{background:var(--mint)}
+
+/* lightbox */
+.lightbox{position:fixed;inset:0;z-index:400;background:rgba(5,20,14,.92);display:none;align-items:center;justify-content:center;padding:30px}
+.lightbox.open{display:flex}
+.lightbox img{max-width:min(920px,92vw);max-height:82vh;border-radius:10px;box-shadow:0 30px 80px rgba(0,0,0,.5)}
+.lightbox-close{position:absolute;top:22px;right:24px;width:46px;height:46px;border-radius:12px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.25);color:#fff;display:grid;place-items:center}
+.lightbox-cap{position:absolute;bottom:26px;left:0;right:0;text-align:center;color:#eef3ea;font-size:.92rem;padding:0 20px}
+
+/* footer */
+footer{background:var(--forest-darker);color:#c9dccf;padding:48px 0 22px}
+.foot-grid{display:grid;grid-template-columns:1.2fr .8fr .8fr 1fr;gap:30px;padding-bottom:28px;border-bottom:1px solid rgba(255,255,255,.1)}
+.foot-brand{display:flex;align-items:center;gap:11px;margin-bottom:10px}
+.foot-brand img{width:40px;height:40px;background:#fff;border-radius:10px;padding:4px}
+.foot-brand b{color:#fff;font-family:'Lora',serif;font-size:1.04rem}
+footer .foot-motto{font-family:'Lora',serif;font-style:italic;color:var(--gold-light);margin-bottom:8px;font-size:.96rem}
+footer p{max-width:300px;font-size:.86rem;line-height:1.55}
+footer h4{color:#fff;font-size:.92rem;margin-bottom:12px;letter-spacing:.02em}
+footer ul{list-style:none;margin:0;padding:0;display:grid;gap:7px;font-size:.86rem}
+footer li a{transition:color .2s,padding-left .2s}
+footer li a:hover{color:var(--gold-light);padding-left:4px}
+.foot-cta{display:flex;flex-direction:column;gap:10px;margin-top:14px;max-width:260px}
+.foot-btn{display:flex;align-items:center;gap:11px;padding:11px 16px;border-radius:13px;font-weight:800;font-size:.86rem;color:#fff;transition:transform .2s,box-shadow .2s}
+.foot-btn:hover{transform:translateY(-3px)}
+.foot-btn .ic-wrap{width:30px;height:30px;border-radius:9px;background:rgba(255,255,255,.2);display:grid;place-items:center;flex:none}
+.foot-btn.wa{background:linear-gradient(135deg,#2fe07a,#1eb85a);box-shadow:0 10px 22px rgba(37,211,102,.32)}
+.foot-btn.fb{background:linear-gradient(135deg,#4d94ff,#1877f2);box-shadow:0 10px 22px rgba(24,119,242,.32)}
+.foot-bottom{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;padding-top:18px;font-size:.8rem;color:#93ab9c}
+@media (max-width:860px){.foot-grid{grid-template-columns:1fr 1fr}}
+@media (max-width:520px){.foot-grid{grid-template-columns:1fr}}
+
+/* floating actions */
+.float-actions{position:fixed;right:20px;bottom:20px;z-index:220;display:flex;flex-direction:column;gap:12px;align-items:center}
+.fab{width:56px;height:56px;border-radius:50%;display:grid;place-items:center;color:#fff;box-shadow:0 14px 30px rgba(0,0,0,.25);transition:transform .22s}
+.fab:hover{transform:translateY(-3px) scale(1.05)}
+.fab.wa{background:linear-gradient(135deg,#2fe07a,#1eb85a)}
+.fab.call{background:var(--forest);width:50px;height:50px;font-size:1.1rem}
+.fab.top{background:#fff;color:var(--forest-deep);border:1px solid var(--line);width:46px;height:46px;font-size:1.1rem;opacity:0;pointer-events:none;transform:translateY(10px)}
+.fab.top.show{opacity:1;pointer-events:auto;transform:none}
+.scroll-progress{position:fixed;top:0;left:0;height:3px;width:0%;z-index:250;background:linear-gradient(90deg,var(--gold-light),var(--gold),var(--forest-light));box-shadow:0 0 10px rgba(240,200,90,.6);transition:width .1s linear}
+
+.js .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.2,1);transition-delay:var(--d,0s)}
+.js .reveal.in{opacity:1;transform:none}
+
+@media (max-width:760px){
+  .sec-head:not(.center){margin-inline:auto;text-align:center}
+  .sec-head:not(.center) .kicker{justify-content:center}
+  .foot-brand{justify-content:center}
+  .foot-cta{align-items:center;margin-inline:auto}
+}
+</style>
 </head>
 <body>
+<a class="skip" href="#main">Skip to main content</a>
 
-    <div class="top-header">
-        <h1>THE KNOWLEDGE CENTER</h1>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+    <symbol id="i-up" viewBox="0 0 24 24"><path d="M12 19V5M6 11l6-6 6 6"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.3 11.3 0 0 0 3.5.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1 11.3 11.3 0 0 0 .57 3.5 1 1 0 0 1-.25 1z"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 9a6 6 0 0 1 12 0c0 6 2 7 2 7H4s2-1 2-7zM10 20a2 2 0 0 0 4 0"/></symbol>
+    <symbol id="i-wa" viewBox="0 0 24 24"><path fill="currentColor" stroke="none" d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.33 4.95L2 22l5.28-1.38a9.9 9.9 0 0 0 4.76 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2zm0 18.1h-.01a8.2 8.2 0 0 1-4.18-1.14l-.3-.18-3.13.82.84-3.05-.2-.31a8.19 8.19 0 0 1-1.26-4.36c0-4.53 3.69-8.22 8.24-8.22 2.2 0 4.27.86 5.83 2.42a8.17 8.17 0 0 1 2.41 5.82c0 4.53-3.69 8.2-8.24 8.2zm4.51-6.16c-.25-.12-1.46-.72-1.68-.8-.23-.08-.39-.12-.56.13-.16.24-.64.8-.79.97-.14.16-.29.18-.54.06-.25-.12-1.04-.38-1.98-1.22-.73-.65-1.23-1.46-1.37-1.7-.14-.25-.02-.38.11-.5.11-.11.25-.29.37-.43.12-.15.16-.25.24-.41.08-.16.04-.31-.02-.43-.06-.12-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.42-.14-.01-.31-.01-.47-.01-.16 0-.43.06-.66.31-.23.25-.86.84-.86 2.04 0 1.2.88 2.36 1 2.52.12.16 1.73 2.64 4.19 3.7.59.25 1.05.4 1.4.51.59.19 1.13.16 1.55.1.47-.07 1.46-.6 1.67-1.17.2-.58.2-1.08.14-1.18-.06-.1-.22-.16-.47-.28z"/></symbol>
+    <symbol id="i-fb" viewBox="0 0 24 24"><path fill="currentColor" stroke="none" d="M13.5 21v-8h2.7l.4-3.1h-3.1V7.9c0-.9.25-1.5 1.55-1.5H16.7V3.6C16.4 3.55 15.4 3.5 14.2 3.5c-2.5 0-4.2 1.5-4.2 4.3v2.1H7.3v3.1h2.7v8h3.5z"/></symbol>
+    <symbol id="i-doc" viewBox="0 0 24 24"><path d="M7 3h7l4 4v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h6"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 5.5v15A2.5 2.5 0 0 1 6.5 18H20"/></symbol>
+    <symbol id="i-inbox" viewBox="0 0 24 24"><path d="M3 12l3-8h12l3 8v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M3 12h5l1.5 3h5L16 12h5"/></symbol>
+    <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9 2.7 18a2 2 0 0 0 1.7 3h15.2a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></symbol>
+  </defs>
+</svg>
+
+<div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
+<nav class="nav" id="siteNav" aria-label="Main">
+  <div class="wrap nav-in">
+    <a class="brand" href="index.html" aria-label="FPFK Bethania Academy, home">
+      <span class="brand-mark"><img src="images/crest.png" alt="FPFK Bethania Academy crest"></span>
+      <span class="brand-text">FPFK Bethania Academy<small>Determination is Nobility</small></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="academics.html">Academics</a></li>
+      <li><a href="admissions.html">Admissions</a></li>
+      <li><a href="activities.html">Activities</a></li>
+      <li><a href="library.html" class="active">Library</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="announcements.html" class="announce-link"><svg class="ic"><use href="#i-bell"/></svg>Announcements</a></li>
+    </ul>
+    <div class="nav-right">
+      <a class="btn btn-outline btn-sm" href="https://portal.bethaniaacademy.com" target="_blank" rel="noopener"><svg class="ic" style="width:.95em;height:.95em"><use href="#i-lock"/></svg> Portal Login</a>
+      <a class="btn btn-forest btn-sm" href="admissions.html">Apply Now</a>
+      <button class="menu-btn" id="menuBtn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="drawer"><svg class="ic"><use href="#i-menu"/></svg></button>
+    </div>
+  </div>
+</nav>
+
+<div class="drawer-overlay" id="drawerOverlay"></div>
+<div class="drawer" id="drawer" aria-hidden="true">
+  <div class="drawer-top">
+    <div class="drawer-brand"><img src="images/crest.png" alt=""><span>Bethania Academy</span></div>
+    <button class="drawer-close" id="drawerClose" type="button" aria-label="Close menu"><svg class="ic"><use href="#i-close"/></svg></button>
+  </div>
+  <nav>
+    <a href="https://portal.bethaniaacademy.com" target="_blank" rel="noopener" class="gold"><svg class="ic"><use href="#i-lock"/></svg> Portal Login</a>
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="academics.html">Academics</a>
+    <a href="admissions.html">Admissions</a>
+    <a href="activities.html">Activities</a>
+    <a href="library.html">Library</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="announcements.html" class="gold"><svg class="ic" style="width:.85em;height:.85em"><use href="#i-bell"/></svg> Announcements</a>
+  </nav>
+  <a class="btn btn-gold" href="admissions.html">Apply Now</a>
+  <div class="drawer-foot">
+    <div class="drawer-social">
+      <a href="https://www.facebook.com/profile.php?id=61594537960965" target="_blank" rel="noopener" aria-label="Facebook"><svg class="ic fill"><use href="#i-fb"/></svg></a>
+      <a href="https://wa.me/254702242291" target="_blank" rel="noopener" aria-label="WhatsApp"><svg class="ic fill"><use href="#i-wa"/></svg></a>
+      <a href="tel:+254702242291" aria-label="Call"><svg class="ic"><use href="#i-phone"/></svg></a>
+      <a href="mailto:fpfkbethacademy@gmail.com" aria-label="Email"><svg class="ic"><use href="#i-mail"/></svg></a>
+    </div>
+    <small>Along Likoni&ndash;Ukunda Road, Mombasa, Kenya</small>
+  </div>
+</div>
+
+<main id="main">
+
+<header class="pagehero">
+  <div class="wrap">
+    <div class="crumb reveal"><a href="index.html">Home</a><span>/</span><span>Library</span></div>
+    <div class="kicker reveal" style="--d:.04s"><svg class="ic" style="width:.9em;height:.9em"><use href="#i-book"/></svg>The Knowledge Center</div>
+    <h1 class="reveal" style="--d:.08s">Discover, Explore, and Excel</h1>
+    <p class="reveal" style="--d:.12s">The Bethania Knowledge Center is the heart of academic excellence &mdash; physical study zones and a live digital revision hub with CBC resources for every class, PP1 to Grade&nbsp;9.</p>
+  </div>
+</header>
+
+<section id="digital">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="kicker"><svg class="ic" style="width:.9em;height:.9em"><use href="#i-doc"/></svg>Digital Revision Hub</div>
+      <h2>Class resources, updated by our academic team</h2>
+      <p>Filter by class to find revision papers, assessment tools and learning materials uploaded by our academic department. New files appear here as soon as they are uploaded &mdash; no page refresh needed.</p>
     </div>
 
-    <header>
-        <div class="nav-container">
-            <div class="logo-box">
-                <img src="images/logo.jpeg" alt="School Logo" class="profile-logo">
-            </div>
-            <button class="menu-btn" onclick="toggleMenu()">
-                <i class="fas fa-bars"></i>
-            </button>
-            <nav id="nav-menu">
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="about.html">About Us</a></li>
-                    <li><a href="academics.html">Academics</a></li>
-                    <li><a href="admissions.html">Admissions</a></li>
-                    <li><a href="activities.html">Co-Curricular</a></li>
-                    <li><a href="library.html" class="active">Library</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
-
-    <div class="about-container">
-        
-        <div class="motto-section">
-            <h2 class="motto-text">Discover, Explore, and Excel</h2>
-            <p>The Bethania Knowledge Center is the heart of academic excellence. We provide a rich environment where students can access both physical literature and digital CBC resources to foster a lifelong culture of research and reading.</p>
-        </div>
-
-        <div class="values-section">
-            <h3><i class="fas fa-cloud-download-alt"></i> Digital Revision Hub</h3>
-            <p>Select your class below to access stored revision papers, assessment tools, and learning materials. These resources are updated regularly by our academic department.</p>
-            
-            <div class="resource-grid">
-                <a href="view-folder.html?grade=PP1" class="grade-link"><i class="fas fa-child"></i>PP1</a>
-                <a href="view-folder.html?grade=PP2" class="grade-link"><i class="fas fa-child"></i>PP2</a>
-                
-                <a href="view-folder.html?grade=G1" class="grade-link"><i class="fas fa-book"></i>G1</a>
-                <a href="view-folder.html?grade=G2" class="grade-link"><i class="fas fa-book"></i>G2</a>
-                <a href="view-folder.html?grade=G3" class="grade-link"><i class="fas fa-book"></i>G3</a>
-                <a href="view-folder.html?grade=G4" class="grade-link"><i class="fas fa-book-reader"></i>G4</a>
-                <a href="view-folder.html?grade=G5" class="grade-link"><i class="fas fa-book-reader"></i>G5</a>
-                <a href="view-folder.html?grade=G6" class="grade-link"><i class="fas fa-graduation-cap"></i>G6</a>
-                
-                <a href="view-folder.html?grade=G7" class="grade-link"><i class="fas fa-microscope"></i>G7</a>
-                <a href="view-folder.html?grade=G8" class="grade-link"><i class="fas fa-flask"></i>G8</a>
-                <a href="view-folder.html?grade=G9" class="grade-link"><i class="fas fa-user-graduate"></i>G9</a>
-            </div>
-        </div>
-
-        <div class="values-section" style="margin-top: 40px;">
-            <h3><i class="fas fa-university"></i> Physical Collection & Study Zones</h3>
-            <p>Our library maintains a vast array of resources tailored to the CBC curriculum, ensuring every student has the tools they need to succeed.</p>
-            
-            <div class="info-grid" style="margin-top: 20px;">
-                <div class="info-card">
-                    <img src="images/library-main.jpg" alt="Library View" style="width:100%; border-radius:10px; margin-bottom:15px;">
-                    <h4>Quiet Study Zones</h4>
-                    <p>Dedicated areas designed for individual focus, research, and intensive KPSEA preparation.</p>
-                </div>
-                <div class="info-card">
-                    <img src="images/reading-area.jpg" alt="Reading Corner" style="width:100%; border-radius:10px; margin-bottom:15px;">
-                    <h4>Literacy & Languages</h4>
-                    <p>A wide selection of English and Kiswahili readers to sharpen communication and creative writing skills.</p>
-                </div>
-            </div>
-        </div>
-
+    <div class="chip-row reveal" id="gradeChips" role="group" aria-label="Filter by class">
+      <button class="chip active" data-grade="">All classes <span class="cnt" id="cnt-all">&hellip;</span></button>
+      <button class="chip" data-grade="PP1">PP1</button>
+      <button class="chip" data-grade="PP2">PP2</button>
+      <button class="chip" data-grade="G1">Grade 1</button>
+      <button class="chip" data-grade="G2">Grade 2</button>
+      <button class="chip" data-grade="G3">Grade 3</button>
+      <button class="chip" data-grade="G4">Grade 4</button>
+      <button class="chip" data-grade="G5">Grade 5</button>
+      <button class="chip" data-grade="G6">Grade 6</button>
+      <button class="chip" data-grade="G7">Grade 7</button>
+      <button class="chip" data-grade="G8">Grade 8</button>
+      <button class="chip" data-grade="G9">Grade 9</button>
     </div>
 
-    <footer>
-        <p class="footer-quote">"Determination is Nobility"</p>
-        <p>&copy; 2026 FPFK Bethania Academy. All Rights Reserved.</p>
-        <p><i class="fas fa-map-marker-alt"></i> Along Likoni Ukunda Road, Mombasa.</p>
-        
-        <div class="footer-whatsapp">
-            <a href="https://wa.me/254702242291" target="_blank">
-                <i class="fab fa-whatsapp"></i> Library Inquiries: 0702242291
-            </a>
-        </div>
-    </footer>
+    <div id="libSkeleton" class="skeleton-grid" aria-hidden="true">
+      <div class="skel-card"><div class="skel-thumb"></div><div class="skel-line"></div><div class="skel-line w60"></div></div>
+      <div class="skel-card"><div class="skel-thumb"></div><div class="skel-line"></div><div class="skel-line w60"></div></div>
+      <div class="skel-card"><div class="skel-thumb"></div><div class="skel-line"></div><div class="skel-line w60"></div></div>
+      <div class="skel-card"><div class="skel-thumb"></div><div class="skel-line"></div><div class="skel-line w60"></div></div>
+    </div>
+    <div id="libGrid" class="res-grid" style="display:none"></div>
+    <div id="libState" style="display:none"></div>
+  </div>
+</section>
 
-    <script>
-        function toggleMenu() {
-            const menu = document.getElementById('nav-menu');
-            menu.classList.toggle('active');
-        }
-    </script>
+<section class="alt">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="kicker"><svg class="ic" style="width:.9em;height:.9em"><use href="#i-book"/></svg>On Campus</div>
+      <h2>Physical Collection &amp; Study Zones</h2>
+      <p>Our library maintains a vast array of resources tailored to the CBC curriculum, ensuring every student has the tools they need to succeed.</p>
+    </div>
+    <div class="info-grid">
+      <div class="info-card reveal" style="--d:.04s">
+        <img src="images/library-main.jpg" alt="Quiet study zone in the school library" loading="lazy">
+        <h4>Quiet Study Zones</h4>
+        <p>Dedicated areas designed for individual focus, research, and intensive assessment preparation.</p>
+      </div>
+      <div class="info-card reveal" style="--d:.08s">
+        <img src="images/reading-area.jpg" alt="Reading corner with CBC readers" loading="lazy">
+        <h4>Literacy &amp; Languages</h4>
+        <p>A wide selection of English and Kiswahili readers to sharpen communication and creative writing skills.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="foot-brand"><img src="images/crest.png" alt=""><b>FPFK Bethania Academy</b></div>
+        <p class="foot-motto">&ldquo;Determination is Nobility&rdquo;</p>
+        <p>A Christian CBC institution in Likoni, Mombasa, nurturing academic excellence and spiritual growth since 1992.</p>
+        <div class="foot-cta">
+          <a class="foot-btn wa" href="https://wa.me/254702242291" target="_blank" rel="noopener"><span class="ic-wrap"><svg class="ic fill" style="width:16px;height:16px"><use href="#i-wa"/></svg></span>Library Inquiries</a>
+          <a class="foot-btn fb" href="https://www.facebook.com/profile.php?id=61594537960965" target="_blank" rel="noopener"><span class="ic-wrap"><svg class="ic fill" style="width:16px;height:16px"><use href="#i-fb"/></svg></span>Follow on Facebook</a>
+        </div>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <ul><li><a href="about.html">About Us</a></li><li><a href="academics.html">Academics</a></li><li><a href="activities.html">Co-Curricular</a></li><li><a href="gallery.html">Gallery</a></li></ul>
+      </div>
+      <div>
+        <h4>Quick Links</h4>
+        <ul><li><a href="admissions.html">Admissions</a></li><li><a href="index.html">Home</a></li><li><a href="announcements.html">Announcements</a></li></ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li>Along Likoni-Ukunda Road, Mombasa</li>
+          <li><a href="tel:+254711638425">+254 711 638 425</a></li>
+          <li><a href="https://wa.me/254702242291" target="_blank" rel="noopener">+254 702 242 291 (WhatsApp)</a></li>
+          <li><a href="mailto:fpfkbethacademy@gmail.com">fpfkbethacademy@gmail.com</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>&copy; <span id="year"></span> FPFK Bethania Academy. All rights reserved.</span>
+      <span>P.O. BOX 96066 - 80100 Mombasa, Kenya &nbsp;&middot;&nbsp; <a href="admin.html" style="opacity:.55">Staff Admin</a></span>
+    </div>
+  </div>
+</footer>
+
+<div class="float-actions">
+  <button class="fab top" id="toTop" type="button" aria-label="Back to top"><svg class="ic"><use href="#i-up"/></svg></button>
+  <a class="fab call" href="tel:+254702242291" aria-label="Call the school"><svg class="ic"><use href="#i-phone"/></svg></a>
+  <a class="fab wa" href="https://wa.me/254702242291?text=Hello%20FPFK%20Bethania%20Academy%2C%20I%20would%20like%20to%20find%20out%20more." target="_blank" rel="noopener" aria-label="Chat with school WhatsApp"><svg class="ic fill" style="width:28px;height:28px"><use href="#i-wa"/></svg></a>
+</div>
+
+<script>
+(function () {
+  'use strict';
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.documentElement.classList.add('js');
+  var $ = function (s, r) { return (r || document).querySelector(s); };
+  var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+
+  var yearEl = $('#year');
+  if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+  /* ---- Supabase client (same project as the rest of the site) ---- */
+  var SUPABASE_URL = 'https://avspdkeozxuxzbmegqwl.supabase.co';
+  var SUPABASE_ANON_KEY = 'sb_publishable_K9s_MVcCe1wtUNUO1YgRbA_QtoBZYRR';
+  var MEDIA_BUCKET = 'website-images';
+  var sb = (window.supabase && window.supabase.createClient) ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
+  function publicUrl(path) { return sb.storage.from(MEDIA_BUCKET).getPublicUrl(path).data.publicUrl; }
+  function escapeHtml(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  function fmtDate(iso) { try { return new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }); } catch (e) { return ''; } }
+
+  /* ---- Nav scroll shadow, back-to-top, progress bar ---- */
+  var nav = $('#siteNav'), progressBar = $('#scrollProgress');
+  function onScroll() {
+    if (nav) nav.classList.toggle('scrolled', window.scrollY > 12);
+    var top = $('#toTop');
+    if (top) top.classList.toggle('show', window.scrollY > 700);
+    if (progressBar) {
+      var h = document.documentElement, max = h.scrollHeight - h.clientHeight;
+      progressBar.style.width = (max > 0 ? (window.scrollY / max) * 100 : 0) + '%';
+    }
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  var menuBtn = $('#menuBtn'), drawer = $('#drawer'), overlay = $('#drawerOverlay'), drawerClose = $('#drawerClose');
+  function setDrawer(open) {
+    if (!drawer || !menuBtn) return;
+    drawer.classList.toggle('open', open);
+    if (overlay) overlay.classList.toggle('open', open);
+    drawer.setAttribute('aria-hidden', String(!open));
+    menuBtn.setAttribute('aria-expanded', String(open));
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  if (menuBtn) menuBtn.addEventListener('click', function () { setDrawer(!drawer.classList.contains('open')); });
+  if (drawerClose) drawerClose.addEventListener('click', function () { setDrawer(false); });
+  if (overlay) overlay.addEventListener('click', function () { setDrawer(false); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') setDrawer(false); });
+  $$('#drawer nav a, #drawer .btn').forEach(function (a) { a.addEventListener('click', function () { setDrawer(false); }); });
+
+  var toTop = $('#toTop');
+  if (toTop) toTop.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' }); });
+
+  var rv = $$('.reveal');
+  if ('IntersectionObserver' in window && !reduce) {
+    var ro = new IntersectionObserver(function (es) { es.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); ro.unobserve(en.target); } }); }, { threshold: .12, rootMargin: '0px 0px -40px 0px' });
+    rv.forEach(function (el) { ro.observe(el); });
+  } else { rv.forEach(function (el) { el.classList.add('in'); }); }
+
+  /* ================= LIBRARY RESOURCES (live from Supabase) =================
+     Table: website_media  (columns: id, title, file_path, file_type, category, created_at)
+     Bucket: website-images
+     Admin uploads set category='library'. There is no dedicated "grade" column,
+     so class filtering matches the grade code (e.g. "G4", "PP1") as a whole word
+     inside the file's title — admins should include the class in the title,
+     e.g. "G4 – Term 1 Revision Set". */
+  var allItems = [], currentGrade = '';
+  var grid = $('#libGrid'), skel = $('#libSkeleton'), stateBox = $('#libState');
+
+  function gradeMatches(title, code) {
+    if (!code) return true;
+    var re = new RegExp('(^|[^a-z0-9])' + code + '([^a-z0-9]|$)', 'i');
+    return re.test(title || '');
+  }
+
+  function cardHtml(r) {
+    var url = publicUrl(r.file_path);
+    var thumb = r.file_type === 'image'
+      ? '<img src="' + url + '" alt="' + escapeHtml(r.title) + '" loading="lazy">'
+      : '<svg class="ic doc-ic"><use href="#i-doc"/></svg>';
+    return '' +
+      '<div class="res-card reveal in">' +
+        '<div class="res-thumb">' + thumb + '</div>' +
+        '<div class="res-body">' +
+          '<span class="res-tag">' + (r.file_type === 'image' ? 'Photo' : 'Document') + '</span>' +
+          '<div class="res-title">' + escapeHtml(r.title) + '</div>' +
+          '<div class="res-date">Uploaded ' + fmtDate(r.created_at) + '</div>' +
+          '<a class="btn btn-outline btn-sm" href="' + url + '" target="_blank" rel="noopener"><svg class="ic" style="width:.9em;height:.9em"><use href="#i-arrow"/></svg> View / Download</a>' +
+        '</div>' +
+      '</div>';
+  }
+
+  function renderState(kind, title, msg) {
+    grid.style.display = 'none';
+    stateBox.style.display = 'block';
+    var icon = kind === 'error' ? 'i-alert' : 'i-inbox';
+    stateBox.innerHTML = '<div class="state-box"><div class="ic-wrap"><svg class="ic" style="width:26px;height:26px"><use href="#' + icon + '"/></svg></div><h4>' + title + '</h4><p>' + msg + '</p></div>';
+  }
+
+  function renderGrid() {
+    var items = allItems.filter(function (r) { return gradeMatches(r.title, currentGrade); });
+    if (!items.length) {
+      renderState('empty', currentGrade ? 'No resources for ' + currentGrade + ' yet' : 'No resources uploaded yet',
+        'Our academic team is preparing digital materials. Please check back soon, or contact the school office for physical copies.');
+      return;
+    }
+    stateBox.style.display = 'none';
+    grid.style.display = 'grid';
+    grid.innerHTML = items.map(cardHtml).join('');
+  }
+
+  function loadLibrary() {
+    if (!sb) { renderState('error', 'Live resources unavailable', 'The resource service could not be reached. Please try again shortly.'); skel.style.display = 'none'; return; }
+    sb.from('website_media').select('*').eq('category', 'library').order('created_at', { ascending: false })
+      .then(function (res) {
+        skel.style.display = 'none';
+        if (res.error) { renderState('error', 'Could not load resources', escapeHtml(res.error.message)); return; }
+        allItems = res.data || [];
+        var allCnt = $('#cnt-all'); if (allCnt) allCnt.textContent = allItems.length;
+        renderGrid();
+      })
+      .catch(function () {
+        skel.style.display = 'none';
+        renderState('error', 'Could not load resources', 'Please check your connection and try again.');
+      });
+  }
+
+  $$('.chip', $('#gradeChips')).forEach(function (chip) {
+    chip.addEventListener('click', function () {
+      $$('.chip', $('#gradeChips')).forEach(function (c) { c.classList.remove('active'); });
+      chip.classList.add('active');
+      currentGrade = chip.getAttribute('data-grade') || '';
+      renderGrid();
+    });
+  });
+
+  loadLibrary();
+})();
+</script>
 </body>
 </html>
