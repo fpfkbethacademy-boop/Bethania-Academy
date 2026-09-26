@@ -802,9 +802,10 @@ html.intro-lock,html.intro-lock body{overflow:hidden;height:100%}
      Pulls every row from website_media where category = 'gallery',
      the same table and bucket the Staff Admin "Gallery / Activities /
      Library" panel writes to. Organised into collections by the
-     month each batch was uploaded, most recent collection first;
-     photos inside a collection stay in the exact order staff
-     uploaded them.
+     "section" staff pick on upload (School Trips, Sports & Games,
+     School Events, Spiritual Life); newest photo first inside each
+     section. Anything uploaded without a recognised section falls
+     into a catch-all "More Moments" group at the end.
      ========================================================= */
   var SUPABASE_URL = 'https://avspdkeozxuxzbmegqwl.supabase.co';
   var SUPABASE_ANON_KEY = 'sb_publishable_K9s_MVcCe1wtUNUO1YgRbA_QtoBZYRR';
@@ -812,6 +813,19 @@ html.intro-lock,html.intro-lock body{overflow:hidden;height:100%}
   var supabaseClient = (window.supabase && SUPABASE_URL)
     ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
     : null;
+
+  var SECTION_ORDER = ['trips', 'sports', 'events', 'spiritual'];
+  var SECTION_LABELS = {
+    trips: 'School Trips',
+    sports: 'Sports & Games',
+    events: 'School Events',
+    spiritual: 'Spiritual Life',
+    other: 'More Moments'
+  };
+  function sectionLabel(key) {
+    if (SECTION_LABELS[key]) return SECTION_LABELS[key];
+    return String(key).replace(/[-_]+/g, ' ').replace(/\b\w/g, function (c) { return c.toUpperCase(); });
+  }
 
   function escapeHtml(s) {
     return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
@@ -826,15 +840,6 @@ html.intro-lock,html.intro-lock body{overflow:hidden;height:100%}
     try {
       return new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }).format(new Date(iso));
     } catch (e) { return ''; }
-  }
-  function monthKey(iso) {
-    var d = new Date(iso);
-    return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0');
-  }
-  function monthLabel(iso) {
-    try {
-      return new Intl.DateTimeFormat('en-GB', { month: 'long', year: 'numeric' }).format(new Date(iso));
-    } catch (e) { return 'Photos'; }
   }
   function slug(s) { return String(s).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''); }
 
@@ -856,16 +861,21 @@ html.intro-lock,html.intro-lock body{overflow:hidden;height:100%}
   }
 
   function buildSections(rows) {
-    // rows are ordered ascending by created_at (true upload order)
-    var order = [];
+    // rows are ordered newest-first (created_at descending); each item
+    // keeps that order inside whichever section bucket it lands in.
     var map = {};
+    var extraKeys = [];
     rows.forEach(function (r) {
-      var key = monthKey(r.created_at);
-      if (!map[key]) { map[key] = { key: key, label: monthLabel(r.created_at), items: [] }; order.push(key); }
+      var key = (r.section || 'other').toString().toLowerCase().trim() || 'other';
+      if (!map[key]) {
+        map[key] = { key: key, label: sectionLabel(key), items: [] };
+        if (SECTION_ORDER.indexOf(key) === -1 && key !== 'other') extraKeys.push(key);
+      }
       map[key].items.push(r);
     });
-    // newest collection first; items inside a collection stay in upload order
-    return order.reverse().map(function (k) { return map[k]; });
+    var orderedKeys = SECTION_ORDER.filter(function (k) { return map[k]; }).concat(extraKeys);
+    if (map.other) orderedKeys.push('other');
+    return orderedKeys.map(function (k) { return map[k]; });
   }
 
   function itemCard(r, globalIndex) {
@@ -898,7 +908,7 @@ html.intro-lock,html.intro-lock body{overflow:hidden;height:100%}
       jumpHtml += '<button type="button" data-target="' + id + '"' + (si === 0 ? ' class="active"' : '') + '>' + escapeHtml(sec.label) + '</button>';
       html += '<section class="g-section" id="' + id + '">' +
         '<div class="g-section-head reveal">' +
-          '<div><div class="kicker">Collection</div><h2>' + escapeHtml(sec.label) + '</h2></div>' +
+          '<div><div class="kicker">Section</div><h2>' + escapeHtml(sec.label) + '</h2></div>' +
           '<span class="g-count">' + imageCount + (imageCount === 1 ? ' photo' : ' photos') + '</span>' +
         '</div>' +
         '<div class="g-grid">';
@@ -920,7 +930,7 @@ html.intro-lock,html.intro-lock body{overflow:hidden;height:100%}
     var totalImages = flatImages.length;
     $('#statCount').textContent = totalImages;
     $('#statSections').textContent = sections.length;
-    $('#statLatest').textContent = fmtDate(rows[rows.length - 1].created_at);
+    $('#statLatest').textContent = fmtDate(rows[0].created_at);
 
     initReveal(wrap);
 
@@ -958,7 +968,7 @@ html.intro-lock,html.intro-lock body{overflow:hidden;height:100%}
       .from('website_media')
       .select('*')
       .eq('category', 'gallery')
-      .order('created_at', { ascending: true })
+      .order('created_at', { ascending: false })
       .then(function (res) {
         if (res.error) {
           renderEmpty('No photos yet', 'Staff can add the first collection from the Gallery panel in Staff Admin \u2014 check back soon.');
